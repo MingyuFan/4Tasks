@@ -9,5 +9,5 @@
 import UIKit
 
 class ListCell: UITableViewCell {
-    @IBOutlet var name: UILabel!
+    @IBOutlet var TaskName: UILabel!
 }

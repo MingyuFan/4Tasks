@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 enum Priority: Int {
     case UI = 0 //important and urgent
     case NUI = 1 //not urgent but important
