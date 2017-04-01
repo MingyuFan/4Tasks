@@ -15,13 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        //let taskStore = TaskStore()
+        let taskStore = TaskStore()
         
-        //let viewContorller = window!.rootViewController
-        //let tabBarController =
-        //let listViewController = tabBarContorller.childViewControllers[0] as! ListViewController
-        //let listViewController = window!.rootViewController as! ListViewController
-        //listViewController.taskStore = taskStore
+        let navController = window!.rootViewController as! UINavigationController
+        let MainViewController = navController.topViewController as! mainViewController
+        MainViewController.taskStore = taskStore;
+        //taskStore.createTask()
         // Override point for customization after application launch.
         return true
     }

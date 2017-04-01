@@ -10,7 +10,7 @@
 import UIKit
 
 class ListViewController: UITableViewController {
-    //var taskStore: TaskStore!
+    var taskStore: TaskStore!
     
     //override func viewDidLoad() {
      //   super.viewDidLoad()
@@ -23,16 +23,15 @@ class ListViewController: UITableViewController {
     //}
     //return row in section  REQUIRED
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return taskStore.allTasks[section].count
-        return 1
+        return taskStore.allTasks[section].count
     }
     
     //display row content  REQUIRED
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as! ListCell
-       // let task = taskStore.allTasks[indexPath.section][indexPath.row]
+        let task = taskStore.allTasks[indexPath.section][indexPath.row]
         
-       // cell.name.text = task.name
+        cell.TaskName.text = task.name
         
         return cell
     }
