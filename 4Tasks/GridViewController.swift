@@ -22,7 +22,7 @@ class GridOne: UITableViewController {
     var taskStore: TaskStore!
 }
 
-class GridTwo: UITableViewController{
+class GridTwo: UITableViewController {
     var taskStore: TaskStore!
 }
 
