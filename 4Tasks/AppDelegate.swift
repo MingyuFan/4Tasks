@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navController = window!.rootViewController as! UINavigationController
         let MainViewController = navController.topViewController as! mainViewController
         MainViewController.taskStore = taskStore;
-        //taskStore.createTask()
+        taskStore.createTask()
         // Override point for customization after application launch.
         return true
     }

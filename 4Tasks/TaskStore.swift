@@ -15,7 +15,9 @@ class TaskStore {
         let newTask = Task(random: true)
         
         allTasks[0].append(newTask)
-        
+        allTasks[1].append(newTask)
+        allTasks[2].append(newTask)
+        allTasks[3].append(newTask)
         return newTask
     }
 }
