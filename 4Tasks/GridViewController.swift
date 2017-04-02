@@ -37,6 +37,8 @@ class GridViewController: UIViewController {
             }
         }
     }
+    
+
 
 }
 
@@ -60,6 +62,10 @@ class GridZero: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.reloadData()
+    }
 }
 
 class GridOne: UITableViewController {
@@ -79,6 +85,10 @@ class GridOne: UITableViewController {
     }
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.reloadData()
     }
 }
 
@@ -100,6 +110,10 @@ class GridTwo: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.reloadData()
+    }
 }
 
 class GridThree: UITableViewController {
@@ -119,5 +133,9 @@ class GridThree: UITableViewController {
     }
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.reloadData()
     }
 }

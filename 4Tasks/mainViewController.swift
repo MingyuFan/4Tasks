@@ -7,12 +7,14 @@
 //
 //  3/29/2017 redesign structure, use container view
 //  4/1/2017  main structure done, data transmission done
+//  4/2/2017  AddTaskViewController.swift's funcionality done
 
 import UIKit
 
 class mainViewController: UIViewController {
     var taskStore: TaskStore!
     var containerViewController: UITabBarController!
+    var addNewTaskViewController: AddTaskViewController!
     let containerSegueName = "containerSegue"
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == containerSegueName{
@@ -23,5 +25,11 @@ class mainViewController: UIViewController {
             listViewController.taskStore = taskStore
             gridViewController.taskStore = taskStore
         }
+        if segue.identifier == "SegueForAddTask" {
+            addNewTaskViewController = segue.destination as! AddTaskViewController
+            addNewTaskViewController.taskStore = taskStore
+        }
     }
+    
+    
 }

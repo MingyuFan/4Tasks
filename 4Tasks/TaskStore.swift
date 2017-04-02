@@ -20,4 +20,18 @@ class TaskStore {
         allTasks[3].append(newTask)
         return newTask
     }
+    @discardableResult func createTask(taskname: String, taskPriority: Priority) -> Task {
+        let task = Task(name: taskname, priority: taskPriority)
+        switch taskPriority {
+        case Priority.UI:
+            allTasks[0].append(task)
+        case Priority.NUI:
+            allTasks[1].append(task)
+        case Priority.UNI:
+            allTasks[2].append(task)
+        case Priority.NUNI:
+            allTasks[3].append(task)
+        }
+        return task
+    }
 }

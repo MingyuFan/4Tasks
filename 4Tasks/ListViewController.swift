@@ -39,4 +39,9 @@ class ListViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.reloadData()
+    }
 }
