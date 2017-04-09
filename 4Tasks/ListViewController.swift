@@ -12,15 +12,21 @@ import UIKit
 class ListViewController: UITableViewController {
     var taskStore: TaskStore!
     
-    //override func viewDidLoad() {
-     //   super.viewDidLoad()
-        
-    //    let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        
-     //   let insets = UIEdgeInsets(top: statusBarHeight, left: 0, bottom: 0, right: 0)
-    //    tableView.contentInset = insets
-     //   tableView.scrollIndicatorInsets = insets
-    //}
+    //pass data to detail
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "listDetail"?:
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.taskStore = taskStore
+            if let section = tableView.indexPathForSelectedRow?.section {
+                if let row = tableView.indexPathForSelectedRow?.row {
+                    detailViewController.task = taskStore.allTasks[section][row]
+                }
+            }
+        default:
+            break
+        }
+    }
     //return row in section  REQUIRED
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskStore.allTasks[section].count

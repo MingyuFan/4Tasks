@@ -7,7 +7,7 @@
 //
 
 import UIKit
-class AddTaskViewController: UIViewController {
+class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     var taskStore: TaskStore!
     @IBOutlet var Save: UIBarButtonItem!
     
@@ -15,6 +15,9 @@ class AddTaskViewController: UIViewController {
     var TaskName: String?
     var Detail: String?
     
+    @IBOutlet var TaskNameTextField: UITextField!
+
+    @IBOutlet var DetailTextView: UITextView!
     //buttons
     @IBOutlet var UI: UIButton!
     @IBOutlet var NUI: UIButton!
@@ -26,29 +29,34 @@ class AddTaskViewController: UIViewController {
         
         //navigationItem.title = "New Task"
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+    }
     //create new task and save it, return to previous view
     @IBAction func SaveNewTask(_ sender: Any) {
         if let name = TaskName {
             if let pri = priority {
-               taskStore.createTask(taskname: name, taskPriority: pri)
+               let task = taskStore.createTask(taskname: name, taskPriority: pri)
+                if let text = DetailTextView.text {
+                    Detail = text
+                    task.detail = Detail
+                }
+                _ = navigationController?.popViewController(animated: true)
             }
         }
     }
     
-    @IBAction func setTask(_ sender: UITextField) {
+    @IBAction func inputTask(_ sender: UITextField) {
         if let text = sender.text {
             TaskName = text
-        }
-    }
-    
-    @IBAction func inputDetail(_ sender: UITextField) {
-        if let text = sender.text {
-            Detail = text
         }
     }
 
     @IBAction func touchUIButton(_ sender: UIButton) {
         priority = Priority.UI
+        UI.isHighlighted = true
     }
 
     @IBAction func touchNUIButton(_ sender: UIButton) {

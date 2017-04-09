@@ -17,7 +17,7 @@ enum Priority: Int {
 class Task: NSObject {
     var name: String
     var detail: String?
-    var priority: Priority?
+    var priority: Priority!
     let dateCreated: Date
     
     init(name: String, priority: Priority) {
