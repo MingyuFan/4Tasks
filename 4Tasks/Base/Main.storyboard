@@ -99,20 +99,17 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
-                                                    <action selector="setTask:" destination="iai-S4-rNk" eventType="editingDidEnd" id="OKN-WI-l9B"/>
+                                                    <action selector="inputTask:" destination="iai-S4-rNk" eventType="editingChanged" id="hn1-gh-VZ1"/>
                                                 </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Detail" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m9V-bX-CD9">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="I8z-As-UHo">
                                         <rect key="frame" x="0.0" y="30" width="343" height="289"/>
-                                        <nil key="textColor"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="inputDetail:" destination="iai-S4-rNk" eventType="editingDidEnd" id="vdj-Q0-n0J"/>
-                                        </connections>
-                                    </textField>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="452-UL-nQ0">
                                         <rect key="frame" x="0.0" y="319" width="343" height="240"/>
                                         <subviews>
@@ -185,9 +182,11 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="DetailTextView" destination="I8z-As-UHo" id="AfI-9U-V4a"/>
                         <outlet property="NUI" destination="MJy-cP-wPa" id="vW5-uC-qDU"/>
                         <outlet property="NUNI" destination="KBe-0i-u2u" id="M7T-c3-wVW"/>
                         <outlet property="Save" destination="7V1-jE-8fr" id="Jly-gG-uZq"/>
+                        <outlet property="TaskNameTextField" destination="8PQ-xN-VNv" id="CPY-DB-JKO"/>
                         <outlet property="UI" destination="uw2-Fa-AqV" id="Zuo-Wx-7IF"/>
                         <outlet property="UNI" destination="go7-R4-qzG" id="le8-qm-UdF"/>
                     </connections>
@@ -207,12 +206,70 @@
                     <view key="view" contentMode="scaleToFill" id="A6n-6W-tty">
                         <rect key="frame" x="0.0" y="0.0" width="333" height="438"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="BdH-5f-4eL">
+                                <rect key="frame" x="16" y="0.0" width="301" height="389"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Mt-ds-Tly">
+                                        <rect key="frame" x="0.0" y="0.0" width="301" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3KY-ca-OLr">
+                                                <rect key="frame" x="0.0" y="0.0" width="40" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="40" id="7Ud-7E-NnY"/>
+                                                </constraints>
+                                                <state key="normal" title="Done"/>
+                                            </button>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xVf-5E-YjP">
+                                                <rect key="frame" x="40" y="0.0" width="261" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="3wU-Ia-EWF"/>
+                                        </constraints>
+                                    </stackView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mGN-of-VJ4">
+                                        <rect key="frame" x="0.0" y="30" width="301" height="269"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T9W-Ob-OdD">
+                                        <rect key="frame" x="0.0" y="299" width="301" height="30"/>
+                                        <state key="normal" title="Priority"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUy-RQ-Jyc">
+                                        <rect key="frame" x="0.0" y="329" width="301" height="30"/>
+                                        <state key="normal" title="Date"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hC6-cU-8eV">
+                                        <rect key="frame" x="0.0" y="359" width="301" height="30"/>
+                                        <state key="normal" title="Remainder"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="BdH-5f-4eL" firstAttribute="leading" secondItem="A6n-6W-tty" secondAttribute="leadingMargin" id="88g-sN-JkL"/>
+                            <constraint firstItem="BdH-5f-4eL" firstAttribute="top" secondItem="u7F-jt-zk3" secondAttribute="bottom" id="A4y-0d-s0J"/>
+                            <constraint firstItem="haa-eX-Bbj" firstAttribute="top" secondItem="BdH-5f-4eL" secondAttribute="bottom" id="QXn-bV-oF1"/>
+                            <constraint firstItem="BdH-5f-4eL" firstAttribute="trailing" secondItem="A6n-6W-tty" secondAttribute="trailingMargin" id="Vyz-Uc-71y"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="DateButton" destination="qUy-RQ-Jyc" id="SmX-vi-whg"/>
+                        <outlet property="Detail" destination="mGN-of-VJ4" id="dX5-Ph-iWs"/>
+                        <outlet property="PriorityButton" destination="T9W-Ob-OdD" id="uxH-6j-HnI"/>
+                        <outlet property="TaskName" destination="xVf-5E-YjP" id="jXi-Kv-R5j"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lya-CS-CA7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2326" y="-901"/>
+            <point key="canvasLocation" x="2326" y="-931"/>
         </scene>
         <!--List-->
         <scene sceneID="yv9-jH-xlu">
@@ -252,7 +309,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="TaskName" destination="SMG-Oc-beo" id="E5Z-dk-WdH"/>
-                                    <segue destination="eMs-QO-DR5" kind="show" id="JhJ-zn-b6w"/>
+                                    <segue destination="eMs-QO-DR5" kind="show" identifier="listDetail" id="JhJ-zn-b6w"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
