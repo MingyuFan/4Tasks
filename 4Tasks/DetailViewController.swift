@@ -11,7 +11,8 @@ import UIKit
 class DetailViewController: UIViewController {
     var taskStore: TaskStore!
     var task: Task!
-    var priority: Priority!
+    var originalPriority: Priority!  //the task's original priority
+    var priority: Priority!   //may be changed by user
     var itemName: String!
     var itemDetail: String?
 
@@ -19,6 +20,17 @@ class DetailViewController: UIViewController {
     @IBOutlet var Detail: UITextView!
     @IBOutlet var PriorityButton: UIButton!
     @IBOutlet var DateButton: UIButton!
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "showPopUp"?:
+            let popUpViewController = segue.destination as! ChangePriorityPopUpViewController
+            popUpViewController.popUpPriority = priority
+        default:
+            break
+        }
+    }
+
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -31,6 +43,11 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.title = "Task"
+        originalPriority = task.priority
+        priority = task.priority
+        itemName = task.name
+        if let de = task.detail {
+            itemDetail = de}
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,4 +66,14 @@ class DetailViewController: UIViewController {
         DateButton.setTitle("Date: \(dateFormatter.string(from: task.dateCreated))", for: .normal)
     }
     
+    @IBAction func changeName(_ sender: UITextField) {
+        if let name = sender.text {
+            itemName = name
+        }
+    }
+    @IBAction func saveTask(_ sender: UIButton) {
+        task.name = itemName
+        
+        _ = navigationController?.popViewController(animated: true)
+    }
 }

@@ -15,7 +15,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     var TaskName: String?
     var Detail: String?
     
-    @IBOutlet var TaskNameTextField: UITextField!
 
     @IBOutlet var DetailTextView: UITextView!
     //buttons
