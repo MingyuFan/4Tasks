@@ -71,6 +71,41 @@ class DetailViewController: UIViewController {
             itemName = name
         }
     }
+
+    @IBAction func changePriorityActionSheet(_ sender: UIButton) {
+        let title = "Change Priority?"
+        let message = "Set Priority to:"
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        ac.addAction(cancelAction)
+        
+        let setToUI = UIAlertAction(title: "Urgent and Important", style: .destructive, handler: {
+            (action)->Void in
+            self.priority = Priority.UI
+        })
+        ac.addAction(setToUI)
+        
+        let setToNUI = UIAlertAction(title: "Not Urgent but Important", style: .destructive, handler: {
+            (action)->Void in
+            self.priority = Priority.NUI
+        })
+        ac.addAction(setToNUI)
+        
+        let setToUNI = UIAlertAction(title: "Urgent but Not Important", style: .destructive, handler: {
+            (action)->Void in
+            self.priority = Priority.UNI
+        })
+        ac.addAction(setToUNI)
+        
+        let setToNUNI = UIAlertAction(title: "Not Urgent Not Important", style: .destructive, handler: {
+            (action)->Void in
+            self.priority = Priority.NUNI
+        })
+        ac.addAction(setToNUNI)
+        present(ac, animated: true,completion: nil)
+    }
+    
     @IBAction func saveTask(_ sender: UIButton) {
         task.name = itemName
         
