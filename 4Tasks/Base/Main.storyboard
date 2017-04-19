@@ -253,7 +253,7 @@
                                         <rect key="frame" x="0.0" y="299" width="301" height="30"/>
                                         <state key="normal" title="Priority"/>
                                         <connections>
-                                            <segue destination="odc-a9-lBw" kind="show" identifier="showPopUp" id="bfe-Cm-4uI"/>
+                                            <action selector="changePriorityActionSheet:" destination="eMs-QO-DR5" eventType="touchUpInside" id="cfW-Rc-ay0"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUy-RQ-Jyc">
@@ -285,71 +285,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lya-CS-CA7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2326" y="-931"/>
-        </scene>
-        <!--Change Priority Pop Up View Controller-->
-        <scene sceneID="Fcw-cE-VjW">
-            <objects>
-                <viewController id="odc-a9-lBw" customClass="ChangePriorityPopUpViewController" customModule="_Tasks" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="TTD-Wm-yfw"/>
-                        <viewControllerLayoutGuide type="bottom" id="Fhy-6A-0Hy"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="cHe-D6-202">
-                        <rect key="frame" x="0.0" y="0.0" width="333" height="438"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ihg-4Q-85v">
-                                <rect key="frame" x="71" y="119" width="190" height="200"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7sK-Aj-z1c">
-                                        <rect key="frame" x="0.0" y="0.0" width="190" height="50"/>
-                                        <state key="normal" title="Urgent and Important"/>
-                                        <connections>
-                                            <action selector="setToUI:" destination="odc-a9-lBw" eventType="touchUpInside" id="An4-M2-jwH"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5uB-Fq-XfR">
-                                        <rect key="frame" x="0.0" y="50" width="190" height="50"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <state key="normal" title="Not Urgent but Important"/>
-                                        <connections>
-                                            <action selector="setToNUI:" destination="odc-a9-lBw" eventType="touchUpInside" id="FN0-hA-QBk"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mYU-3F-FHx">
-                                        <rect key="frame" x="0.0" y="100" width="190" height="50"/>
-                                        <state key="normal" title="Urgent but Not Important"/>
-                                        <connections>
-                                            <action selector="setToUNI:" destination="odc-a9-lBw" eventType="touchUpInside" id="EGy-B5-U44"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G9L-4f-YOc">
-                                        <rect key="frame" x="0.0" y="150" width="190" height="50"/>
-                                        <state key="normal" title="Not Urgent Not Important"/>
-                                        <connections>
-                                            <action selector="setToNUNI:" destination="odc-a9-lBw" eventType="touchUpInside" id="HbC-h5-X4T"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="mYU-3F-FHx" firstAttribute="height" secondItem="7sK-Aj-z1c" secondAttribute="height" id="7qP-hJ-gL1"/>
-                                    <constraint firstAttribute="height" constant="200" id="AzA-mm-71p"/>
-                                    <constraint firstItem="G9L-4f-YOc" firstAttribute="height" secondItem="7sK-Aj-z1c" secondAttribute="height" id="FSp-OD-jzj"/>
-                                    <constraint firstItem="5uB-Fq-XfR" firstAttribute="height" secondItem="7sK-Aj-z1c" secondAttribute="height" id="HBm-4o-sm5"/>
-                                    <constraint firstAttribute="width" constant="190" id="IhA-4s-oZ4"/>
-                                </constraints>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="ihg-4Q-85v" firstAttribute="centerX" secondItem="cHe-D6-202" secondAttribute="centerX" id="bfV-sx-uvA"/>
-                            <constraint firstItem="ihg-4Q-85v" firstAttribute="centerY" secondItem="cHe-D6-202" secondAttribute="centerY" id="evC-K4-OPf"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1I4-4S-SSe" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3149.5999999999999" y="-931.03448275862081"/>
         </scene>
         <!--List-->
         <scene sceneID="yv9-jH-xlu">
