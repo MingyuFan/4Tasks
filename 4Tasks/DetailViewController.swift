@@ -21,17 +21,6 @@ class DetailViewController: UIViewController {
     @IBOutlet var PriorityButton: UIButton!
     @IBOutlet var DateButton: UIButton!
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier {
-        case "showPopUp"?:
-            let popUpViewController = segue.destination as! ChangePriorityPopUpViewController
-            popUpViewController.popUpPriority = priority
-        default:
-            break
-        }
-    }
-
-    
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -108,7 +97,19 @@ class DetailViewController: UIViewController {
     
     @IBAction func saveTask(_ sender: UIButton) {
         task.name = itemName
-        
+        if let lastDetail = Detail.text {
+            task.detail = lastDetail
+        }
+        if originalPriority != priority {
+            taskStore.removeTask(task)
+            task.priority = priority
+            taskStore.insertTask(task)
+        }
+        _ = navigationController?.popViewController(animated: true)
+    }
+    //This task is done and can be deleted
+    @IBAction func taskIsDone(_ sender: UIButton) {
+        taskStore.removeTask(task)
         _ = navigationController?.popViewController(animated: true)
     }
 }

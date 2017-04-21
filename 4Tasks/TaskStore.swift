@@ -34,4 +34,38 @@ class TaskStore {
         }
         return task
     }
+    
+    func removeTask(_ task: Task) {
+        var grid:Int!
+        let p = task.priority
+        switch p! {
+        case Priority.UI:
+            grid = 0
+        case Priority.NUI:
+            grid = 1
+        case Priority.UNI:
+            grid = 2
+        case Priority.NUNI:
+            grid = 3
+        }
+        if let index = allTasks[grid].index(of: task) {
+            allTasks[grid].remove(at: index)
+        }
+    }
+    
+    func insertTask(_ task: Task) {
+        var grid:Int!
+        let p = task.priority
+        switch p! {
+        case Priority.UI:
+            grid = 0
+        case Priority.NUI:
+            grid = 1
+        case Priority.UNI:
+            grid = 2
+        case Priority.NUNI:
+            grid = 3
+        }
+        allTasks[grid].insert(task, at: 0)
+    }
 }

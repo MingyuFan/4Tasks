@@ -52,6 +52,20 @@ class GridZero: UITableViewController {
         return taskStore.allTasks[0].count
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "gridSegueZero"?:
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.taskStore = taskStore
+                if let row = tableView.indexPathForSelectedRow?.row {
+                    detailViewController.task = taskStore.allTasks[0][row]
+                }
+            
+        default:
+            break
+        }
+    }
+    
     //display row content  REQUIRED
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GridCellZero", for: indexPath) as! GridCellZero
@@ -83,6 +97,21 @@ class GridOne: UITableViewController {
         cell.TaskName.text = task.name
         return cell
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "gridSegueOne"?:
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.taskStore = taskStore
+            if let row = tableView.indexPathForSelectedRow?.row {
+                detailViewController.task = taskStore.allTasks[1][row]
+            }
+            
+        default:
+            break
+        }
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -107,6 +136,21 @@ class GridTwo: UITableViewController {
         cell.TaskName.text = task.name
         return cell
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "gridSegueTwo"?:
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.taskStore = taskStore
+            if let row = tableView.indexPathForSelectedRow?.row {
+                detailViewController.task = taskStore.allTasks[2][row]
+            }
+            
+        default:
+            break
+        }
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -131,6 +175,21 @@ class GridThree: UITableViewController {
         cell.TaskName.text = task.name
         return cell
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "gridSegueThree"?:
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.taskStore = taskStore
+            if let row = tableView.indexPathForSelectedRow?.row {
+                detailViewController.task = taskStore.allTasks[3][row]
+            }
+            
+        default:
+            break
+        }
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
