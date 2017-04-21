@@ -14,7 +14,7 @@ enum Priority: Int {
     case UNI = 2//ugent but not important
     case NUNI = 3//not ugent not important
 }
-class Task: NSObject {
+class Task: NSObject, NSCoding {
     var name: String
     var detail: String?
     var priority: Priority!
@@ -43,5 +43,21 @@ class Task: NSObject {
         else {
             self.init(name: "",priority: .NUI)
         }
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(name, forKey: "name")
+        aCoder.encode(detail, forKey: "detail")
+        aCoder.encode(dateCreated, forKey: "dateCreated")
+        aCoder.encode(priority?.rawValue, forKey: "priority")
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        name = aDecoder.decodeObject(forKey: "name") as! String
+        priority = Priority(rawValue: aDecoder.decodeObject(forKey: "priority") as! Int)
+        detail = aDecoder.decodeObject(forKey: "detail") as! String?
+        dateCreated = aDecoder.decodeObject(forKey: "dateCreated") as! Date
+        
+        super.init()
     }
 }

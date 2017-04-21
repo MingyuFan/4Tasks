@@ -10,7 +10,11 @@ import UIKit
 
 class TaskStore {
     var allTasks = Array(repeating:[Task](), count: 4)
-    
+    let taskArchiveURL: URL = {
+       let documentsDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentDirectory = documentsDirectories.first!
+        return documentDirectory.appendingPathComponent("tasks.archive")
+    }()
     @discardableResult func createTask() -> Task {
         let newTask = Task(random: true)
         
@@ -20,6 +24,12 @@ class TaskStore {
         allTasks[3].append(newTask)
         return newTask
     }
+    init() {
+        if let archivedTasks = NSKeyedUnarchiver.unarchiveObject(withFile: taskArchiveURL.path) as? [[Task]] {
+            allTasks = archivedTasks
+        }
+    }
+    
     @discardableResult func createTask(taskname: String, taskPriority: Priority) -> Task {
         let task = Task(name: taskname, priority: taskPriority)
         switch taskPriority {
@@ -68,4 +78,10 @@ class TaskStore {
         }
         allTasks[grid].insert(task, at: 0)
     }
+    
+    func saveChanges() -> Bool {
+        print("Saving items to: \(taskArchiveURL.path)")
+        return NSKeyedArchiver.archiveRootObject(allTasks, toFile: taskArchiveURL.path)
+    }
+    
 }
