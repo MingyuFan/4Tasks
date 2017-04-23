@@ -10,6 +10,7 @@ import UIKit
 
 class ListCell: UITableViewCell {
     @IBOutlet var TaskName: UILabel!
+    
 }
 
 class GridCellZero: UITableViewCell {
@@ -31,3 +32,4 @@ class GridCellThree: UITableViewCell {
     @IBOutlet var TaskName: UILabel!
     
 }
+

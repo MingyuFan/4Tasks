@@ -55,18 +55,32 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
 
     @IBAction func touchUIButton(_ sender: UIButton) {
         priority = Priority.UI
-        UI.isHighlighted = true
+        UI.backgroundColor = UIColor.lightGray
+        NUI.backgroundColor = UIColor.white
+        UNI.backgroundColor = UIColor.white
+        NUNI.backgroundColor = UIColor.white
     }
 
     @IBAction func touchNUIButton(_ sender: UIButton) {
         priority = Priority.NUI
+        UI.backgroundColor = UIColor.white
+        NUI.backgroundColor = UIColor.lightGray
+        UNI.backgroundColor = UIColor.white
+        NUNI.backgroundColor = UIColor.white
     }
     
     @IBAction func touchUNIButton(_ sender: UIButton) {
         priority = Priority.UNI
+        UI.backgroundColor = UIColor.white
+        NUI.backgroundColor = UIColor.white
+        UNI.backgroundColor = UIColor.lightGray
+        NUNI.backgroundColor = UIColor.white
     }
     @IBAction func touchNUNIButton(_ sender: UIButton) {
         priority = Priority.NUNI
-        
+        UI.backgroundColor = UIColor.white
+        NUI.backgroundColor = UIColor.white
+        UNI.backgroundColor = UIColor.white
+        NUNI.backgroundColor = UIColor.lightGray
     }
 }

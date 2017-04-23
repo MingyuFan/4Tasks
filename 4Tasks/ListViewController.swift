@@ -38,7 +38,18 @@ class ListViewController: UITableViewController {
         let task = taskStore.allTasks[indexPath.section][indexPath.row]
         
         cell.TaskName.text = task.name
-        
+        switch indexPath.section {
+        case 0:
+            cell.contentView.subviews[1].backgroundColor = UIColor.red
+        case 1:
+            cell.contentView.subviews[1].backgroundColor = UIColor.orange
+        case 2:
+            cell.contentView.subviews[1].backgroundColor = UIColor.blue
+        case 3:
+            cell.contentView.subviews[1].backgroundColor = UIColor.green
+        default:
+            break
+        }
         return cell
     }
     
