@@ -118,28 +118,38 @@
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uw2-Fa-AqV">
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="60"/>
-                                                        <state key="normal" title="Urgent and Important"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <state key="normal" title="Urgent and Important">
+                                                            <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </state>
                                                         <connections>
                                                             <action selector="touchUIButton:" destination="iai-S4-rNk" eventType="touchUpInside" id="Yeh-d4-1pz"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJy-cP-wPa">
                                                         <rect key="frame" x="0.0" y="60" width="343" height="60"/>
-                                                        <state key="normal" title="Not Urgent but Important"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <state key="normal" title="Not Urgent but Important">
+                                                            <color key="titleColor" red="1" green="0.40000000000000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </state>
                                                         <connections>
                                                             <action selector="touchNUIButton:" destination="iai-S4-rNk" eventType="touchUpInside" id="Ytc-a2-crF"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="go7-R4-qzG">
                                                         <rect key="frame" x="0.0" y="120" width="343" height="60"/>
-                                                        <state key="normal" title="Urgent but Not Important"/>
+                                                        <state key="normal" title="Urgent but Not Important">
+                                                            <color key="titleColor" red="0.0" green="0.20000000000000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </state>
                                                         <connections>
                                                             <action selector="touchUNIButton:" destination="iai-S4-rNk" eventType="touchUpInside" id="QVU-xv-Zey"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KBe-0i-u2u">
                                                         <rect key="frame" x="0.0" y="180" width="343" height="60"/>
-                                                        <state key="normal" title="Not Urgent Not Important"/>
+                                                        <state key="normal" title="Not Urgent Not Important">
+                                                            <color key="titleColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </state>
                                                         <connections>
                                                             <action selector="touchNUNIButton:" destination="iai-S4-rNk" eventType="touchUpInside" id="CVk-ak-WYP"/>
                                                         </connections>
@@ -218,6 +228,9 @@
                                                     <constraint firstAttribute="width" constant="40" id="7Ud-7E-NnY"/>
                                                 </constraints>
                                                 <state key="normal" title="Done"/>
+                                                <connections>
+                                                    <action selector="taskIsDone:" destination="eMs-QO-DR5" eventType="touchUpInside" id="jxi-Vn-R8c"/>
+                                                </connections>
                                             </button>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xVf-5E-YjP">
                                                 <rect key="frame" x="40" y="0.0" width="221" height="30"/>
@@ -244,13 +257,13 @@
                                         </constraints>
                                     </stackView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mGN-of-VJ4">
-                                        <rect key="frame" x="0.0" y="30" width="301" height="269"/>
+                                        <rect key="frame" x="0.0" y="30" width="301" height="164.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T9W-Ob-OdD">
-                                        <rect key="frame" x="0.0" y="299" width="301" height="30"/>
+                                        <rect key="frame" x="0.0" y="194.5" width="301" height="134.5"/>
                                         <state key="normal" title="Priority"/>
                                         <connections>
                                             <action selector="changePriorityActionSheet:" destination="eMs-QO-DR5" eventType="touchUpInside" id="cfW-Rc-ay0"/>
@@ -307,19 +320,28 @@
                                 <rect key="frame" x="0.0" y="72" width="333" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lbi-jN-eqQ" id="hQo-vQ-IEC">
-                                    <rect key="frame" x="0.0" y="0.0" width="333" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="333" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SMG-Oc-beo">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SMG-Oc-beo">
                                             <rect key="frame" x="31" y="11" width="42" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BbX-2T-i9t">
+                                            <rect key="frame" x="8" y="12" width="10" height="20"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="10" id="W4o-3R-aB2"/>
+                                                <constraint firstAttribute="height" constant="20" id="ebd-bI-jLe"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="SMG-Oc-beo" firstAttribute="centerY" secondItem="hQo-vQ-IEC" secondAttribute="centerY" id="Dxg-J3-Vtv"/>
-                                        <constraint firstItem="SMG-Oc-beo" firstAttribute="leading" secondItem="hQo-vQ-IEC" secondAttribute="leadingMargin" constant="23" id="emX-BZ-J5t"/>
+                                        <constraint firstItem="BbX-2T-i9t" firstAttribute="leading" secondItem="hQo-vQ-IEC" secondAttribute="leadingMargin" id="iyL-ho-hQu"/>
+                                        <constraint firstItem="BbX-2T-i9t" firstAttribute="centerY" secondItem="hQo-vQ-IEC" secondAttribute="centerY" id="rDT-SA-P3A"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -333,7 +355,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uWi-8s-D3K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2326" y="-438"/>
+            <point key="canvasLocation" x="2325.5999999999999" y="-438.0809595202399"/>
         </scene>
         <!--Grid-->
         <scene sceneID="0lM-Mp-CQA">
@@ -485,6 +507,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="taskName" destination="4mK-fQ-0IT" id="KyE-Q0-2jq"/>
+                                    <segue destination="eMs-QO-DR5" kind="show" identifier="gridSegueZero" id="k4t-3c-948"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -492,7 +515,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ujz-Ib-lh8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2937" y="-177"/>
+            <point key="canvasLocation" x="2838" y="-278"/>
         </scene>
         <!--Grid One-->
         <scene sceneID="eNz-Dd-aQj">
@@ -532,6 +555,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="taskName" destination="B47-aT-1z8" id="2M9-tj-ksA"/>
+                                    <segue destination="eMs-QO-DR5" kind="show" identifier="gridSegueOne" id="VeF-TG-qeY"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -539,7 +563,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lic-Ii-TJt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3268" y="-178"/>
+            <point key="canvasLocation" x="3297" y="-278"/>
         </scene>
         <!--Grid Two-->
         <scene sceneID="Y3W-h6-Yis">
@@ -579,6 +603,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="taskName" destination="fzn-ZN-aLd" id="4YO-am-K0c"/>
+                                    <segue destination="eMs-QO-DR5" kind="show" identifier="gridSegueTwo" id="64i-5R-YDv"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -586,7 +611,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IKl-wE-jcj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2903" y="237"/>
+            <point key="canvasLocation" x="2879" y="16"/>
         </scene>
         <!--Grid Three-->
         <scene sceneID="Hb8-cu-Afc">
@@ -626,6 +651,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="taskName" destination="JYF-Wi-7Uh" id="ZNq-vo-5sP"/>
+                                    <segue destination="eMs-QO-DR5" kind="show" identifier="gridSegueThree" id="oh6-uY-EX5"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -633,7 +659,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jRj-1T-Uj4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3258" y="236"/>
+            <point key="canvasLocation" x="3273" y="9"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="JhJ-zn-b6w"/>
+    </inferredMetricsTieBreakers>
 </document>
