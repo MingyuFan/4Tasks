@@ -52,18 +52,73 @@
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ymm-3D-LTu">
+                                <rect key="frame" x="-200" y="64" width="200" height="603"/>
+                                <subviews>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u8Q-fs-9H2">
+                                        <rect key="frame" x="143" y="44" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="changeHeaderListSwitch:" destination="0Ri-sZ-trp" eventType="valueChanged" id="ut0-QM-D0E"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Show Header in List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgK-ey-Mmm">
+                                        <rect key="frame" x="8" y="49" width="121" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Show Header in Grid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zE6-Oh-jqr">
+                                        <rect key="frame" x="8" y="100" width="127" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zTg-Dc-51q">
+                                        <rect key="frame" x="143" y="95" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="changeHeaderGridSwitch:" destination="0Ri-sZ-trp" eventType="valueChanged" id="5rN-Z2-qg9"/>
+                                        </connections>
+                                    </switch>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.59999999999999998" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="u8Q-fs-9H2" firstAttribute="top" secondItem="ymm-3D-LTu" secondAttribute="top" constant="44" id="4Nm-6Q-0Pm"/>
+                                    <constraint firstItem="cgK-ey-Mmm" firstAttribute="top" secondItem="ymm-3D-LTu" secondAttribute="top" constant="49" id="Vgj-tm-8db"/>
+                                    <constraint firstItem="cgK-ey-Mmm" firstAttribute="leading" secondItem="ymm-3D-LTu" secondAttribute="leading" constant="8" id="X0Q-mh-Gg7"/>
+                                    <constraint firstItem="zE6-Oh-jqr" firstAttribute="leading" secondItem="ymm-3D-LTu" secondAttribute="leading" constant="8" id="YVz-MV-wDl"/>
+                                    <constraint firstAttribute="width" constant="200" id="d2T-hO-5ln"/>
+                                    <constraint firstAttribute="trailing" secondItem="zTg-Dc-51q" secondAttribute="trailing" constant="8" id="hHQ-dw-xQG"/>
+                                    <constraint firstAttribute="trailing" secondItem="u8Q-fs-9H2" secondAttribute="trailing" constant="8" id="n8j-wW-YPt"/>
+                                    <constraint firstItem="zTg-Dc-51q" firstAttribute="top" secondItem="u8Q-fs-9H2" secondAttribute="bottom" constant="20" id="ujv-Dr-bAi"/>
+                                    <constraint firstItem="zE6-Oh-jqr" firstAttribute="top" secondItem="cgK-ey-Mmm" secondAttribute="bottom" constant="30" id="zvl-XU-rGl"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.80000000000000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="m7n-AL-1lv" firstAttribute="top" secondItem="CRg-uU-SlP" secondAttribute="bottom" constant="50" id="1H7-Kc-NKJ"/>
+                            <constraint firstItem="ymm-3D-LTu" firstAttribute="leading" secondItem="viU-XY-u5j" secondAttribute="leading" constant="-200" id="CRf-D2-EeC"/>
                             <constraint firstAttribute="trailingMargin" secondItem="m7n-AL-1lv" secondAttribute="trailing" constant="5" id="FSG-L3-cBw"/>
+                            <constraint firstItem="WZp-2T-WMn" firstAttribute="top" secondItem="ymm-3D-LTu" secondAttribute="bottom" id="QBf-SC-S8j"/>
                             <constraint firstItem="WZp-2T-WMn" firstAttribute="top" secondItem="m7n-AL-1lv" secondAttribute="bottom" constant="15" id="X07-0r-Ck8"/>
                             <constraint firstItem="m7n-AL-1lv" firstAttribute="leading" secondItem="viU-XY-u5j" secondAttribute="leadingMargin" constant="5" id="bJ7-pa-Xo7"/>
+                            <constraint firstItem="ymm-3D-LTu" firstAttribute="top" secondItem="CRg-uU-SlP" secondAttribute="bottom" id="rk7-WK-srs"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Make Life More Effciency" id="Y5z-mK-b4b">
+                        <barButtonItem key="leftBarButtonItem" systemItem="organize" id="Q74-bW-X3K">
+                            <connections>
+                                <action selector="openMenu:" destination="0Ri-sZ-trp" id="nwL-o6-AfQ"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="1dZ-fb-3U8"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="headerGridSwitch" destination="zTg-Dc-51q" id="5An-Cg-BS7"/>
+                        <outlet property="headerListSwitch" destination="u8Q-fs-9H2" id="er0-vA-k6K"/>
+                        <outlet property="leadingConstraint" destination="CRf-D2-EeC" id="J55-fn-D6T"/>
+                        <outlet property="menuView" destination="ymm-3D-LTu" id="vuc-1x-EJh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sbX-u4-c6h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -320,7 +375,7 @@
                                 <rect key="frame" x="0.0" y="72" width="333" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lbi-jN-eqQ" id="hQo-vQ-IEC">
-                                    <rect key="frame" x="0.0" y="0.0" width="333" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="333" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SMG-Oc-beo">
