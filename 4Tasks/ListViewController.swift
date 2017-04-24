@@ -57,14 +57,26 @@ class ListViewController: UITableViewController {
         
         if(defaults.object(forKey: "listSwitch") != nil ) {
             if(defaults.bool(forKey: "listSwitch")) {
-                return "switch on"
-            } else {
-                return "switch off"
+                switch section {
+                case 0:
+                    if (taskStore.allTasks[0].count==0) {return nil}
+                    else {return "Urgent and Important"}
+                case 1:
+                    if (taskStore.allTasks[1].count==0) {return nil}
+                    else {return "Not Urgent but Important"}
+                case 2:
+                    if (taskStore.allTasks[2].count==0) {return nil}
+                    else {return "Urgent but Not Important"}
+                case 3:
+                    if (taskStore.allTasks[3].count==0) {return nil}
+                    else {return "Not Urgent Not Important"}
+                default:
+                    return nil
+                }
             }
         }
-        return "switch off"
+        return nil
     }
-    //Switch for show section
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4

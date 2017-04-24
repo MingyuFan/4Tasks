@@ -8,10 +8,16 @@
 //  3/29/2017 redesign structure, use container view
 //  4/1/2017  main structure done, data transmission done
 //  4/2/2017  AddTaskViewController.swift's funcionality done
+//  4/6/2017  DetailViewController.swift done
+//  4/8/2017  Cells done
+//  4/13/2017 Set style for Priority; Slider menu
+//  4/15/2017 Settings in slider menu: control section header
 
 import UIKit
 
 class mainViewController: UIViewController {
+    var listViewController: ListViewController!
+    var gridViewController: GridViewController!
     var taskStore: TaskStore!
     
     @IBOutlet var headerListSwitch: UISwitch!
@@ -46,8 +52,8 @@ class mainViewController: UIViewController {
         if segue.identifier == containerSegueName{
             containerViewController = segue.destination as! UITabBarController
             //pass taskStore to two sub viewControllers
-            let listViewController = containerViewController!.viewControllers?[0] as! ListViewController
-            let gridViewController = containerViewController!.viewControllers?[1] as! GridViewController
+            listViewController = containerViewController!.viewControllers?[0] as! ListViewController
+            gridViewController = containerViewController!.viewControllers?[1] as! GridViewController
             listViewController.taskStore = taskStore
             gridViewController.taskStore = taskStore
         }
@@ -69,7 +75,7 @@ class mainViewController: UIViewController {
     @IBAction func changeHeaderGridSwitch(_ sender: Any) {
         let defaults = UserDefaults.standard
         
-        if headerListSwitch.isOn {
+        if headerGridSwitch.isOn {
             defaults.set(true, forKey: "gridSwitch")
         } else {
             defaults.set(false, forKey: "gridSwitch")
@@ -92,6 +98,17 @@ class mainViewController: UIViewController {
             })
         }
         menuShowing = !menuShowing
+        listViewController.tableView.reloadData()
+        if(gridViewController.gridZero != nil) {
+            gridViewController.gridZero.tableView.reloadData()}
+        if(gridViewController.gridOne != nil) {
+            gridViewController.gridOne.tableView.reloadData()}
+        if(gridViewController.gridTwo != nil) {
+            gridViewController.gridTwo.tableView.reloadData()}
+        if(gridViewController.gridThree != nil){
+            gridViewController.gridThree.tableView.reloadData()}
+        
+        
     }
     
 }

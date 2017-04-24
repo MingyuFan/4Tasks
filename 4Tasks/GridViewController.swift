@@ -80,6 +80,19 @@ class GridZero: UITableViewController {
         super.viewWillAppear(true)
         tableView.reloadData()
     }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let defaults = UserDefaults.standard
+        
+        if(defaults.object(forKey: "gridSwitch") != nil) {
+            if(defaults.bool(forKey: "gridSwitch")) {
+                return "Urgent and Important"
+            } else {
+                return nil
+            }
+        }
+        return nil
+    }
 }
 
 class GridOne: UITableViewController {
@@ -118,6 +131,19 @@ class GridOne: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         tableView.reloadData()
+    }
+    //show and hide section header
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let defaults = UserDefaults.standard
+        
+        if(defaults.object(forKey: "gridSwitch") != nil) {
+            if(defaults.bool(forKey: "gridSwitch")) {
+                return "Not Urgent But Important"
+            } else {
+                return nil
+            }
+        }
+        return nil
     }
 }
 
@@ -158,6 +184,19 @@ class GridTwo: UITableViewController {
         super.viewWillAppear(true)
         tableView.reloadData()
     }
+    //show and hide section header
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let defaults = UserDefaults.standard
+        
+        if(defaults.object(forKey: "gridSwitch") != nil) {
+            if(defaults.bool(forKey: "gridSwitch")) {
+                return "Urgent but Not Important"
+            } else {
+                return nil
+            }
+        }
+        return nil
+    }
 }
 
 class GridThree: UITableViewController {
@@ -196,5 +235,18 @@ class GridThree: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         tableView.reloadData()
+    }
+    //show and hide section header
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let defaults = UserDefaults.standard
+        
+        if(defaults.object(forKey: "gridSwitch") != nil) {
+            if(defaults.bool(forKey: "gridSwitch")) {
+                return "Not Urgent Not Important"
+            } else {
+                return nil
+            }
+        }
+        return nil
     }
 }
