@@ -11,7 +11,6 @@ import UIKit
 
 class ListViewController: UITableViewController {
     var taskStore: TaskStore!
-    
     //pass data to detail
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
@@ -52,6 +51,20 @@ class ListViewController: UITableViewController {
         }
         return cell
     }
+    //show section header or not
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let defaults = UserDefaults.standard
+        
+        if(defaults.object(forKey: "listSwitch") != nil ) {
+            if(defaults.bool(forKey: "listSwitch")) {
+                return "switch on"
+            } else {
+                return "switch off"
+            }
+        }
+        return "switch off"
+    }
+    //Switch for show section
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4

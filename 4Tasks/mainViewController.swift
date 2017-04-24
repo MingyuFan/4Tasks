@@ -13,8 +13,34 @@ import UIKit
 
 class mainViewController: UIViewController {
     var taskStore: TaskStore!
+    
+    @IBOutlet var headerListSwitch: UISwitch!
+    @IBOutlet var headerGridSwitch: UISwitch!
+    
+    @IBOutlet var leadingConstraint: NSLayoutConstraint!
+    var menuShowing: Bool = false
+    
+    @IBOutlet var menuView: UIView!
+    
     var containerViewController: UITabBarController!
     var addNewTaskViewController: AddTaskViewController!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let defaults = UserDefaults.standard
+        
+        if(defaults.object(forKey: "listSwitch") != nil) {
+            headerListSwitch.isOn = defaults.bool(forKey: "listSwitch")
+        }
+        
+        if(defaults.object(forKey: "gridSwitch") != nil) {
+            headerListSwitch.isOn = defaults.bool(forKey: "gridSwitch")
+        }
+        
+        menuView.layer.shadowOpacity = 1
+        menuView.layer.shadowRadius = 6
+    }
     let containerSegueName = "containerSegue"
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == containerSegueName{
@@ -31,5 +57,41 @@ class mainViewController: UIViewController {
         }
     }
     
+    @IBAction func changeHeaderListSwitch(_ sender: Any) {
+        let defaults = UserDefaults.standard
+        
+        if headerListSwitch.isOn {
+            defaults.set(true, forKey: "listSwitch")
+        } else {
+            defaults.set(false, forKey: "listSwitch")
+        }
+    }
+    @IBAction func changeHeaderGridSwitch(_ sender: Any) {
+        let defaults = UserDefaults.standard
+        
+        if headerListSwitch.isOn {
+            defaults.set(true, forKey: "gridSwitch")
+        } else {
+            defaults.set(false, forKey: "gridSwitch")
+        }
+    }
+
+    @IBAction func openMenu(_ sender: Any) {
+        if (menuShowing) {
+            leadingConstraint.constant = -210
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view.layoutIfNeeded()
+            })
+            
+        } else {
+            leadingConstraint.constant = 0
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view.layoutIfNeeded()
+            })
+        }
+        menuShowing = !menuShowing
+    }
     
 }

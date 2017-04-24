@@ -43,6 +43,12 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
                     task.detail = Detail
                 }
                 _ = navigationController?.popViewController(animated: true)
+            } else {
+                let message = "Please select Priority"
+                let ac = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                ac.addAction(cancelAction)
+                present(ac, animated: true, completion: nil)
             }
         }
     }

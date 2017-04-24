@@ -110,7 +110,7 @@ class DetailViewController: UIViewController {
     //This task is done and can be deleted
     @IBAction func taskIsDone(_ sender: UIButton) {
         let title = "Task is Done"
-        let message = "Are you sure to delete this task"
+        let message = "Are you sure to remove this task"
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         ac.addAction(cancelAction)
