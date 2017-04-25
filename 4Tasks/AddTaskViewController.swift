@@ -25,7 +25,15 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let toolbar = UIToolbar()
+        toolbar.bounds = CGRect(x: 0, y: 0, width: 320, height: 50)
+        toolbar.sizeToFit()
+        toolbar.barStyle = UIBarStyle.default
+        toolbar.items = [
+            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil), UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: nil, action: #selector(handleDone(sender:)))
+        ]
         
+        self.DetailTextView.inputAccessoryView = toolbar
         //navigationItem.title = "New Task"
     }
     
@@ -88,5 +96,14 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         NUI.backgroundColor = UIColor.white
         UNI.backgroundColor = UIColor.white
         NUNI.backgroundColor = UIColor.lightGray
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func handleDone(sender: UIButton) {
+        self.DetailTextView.resignFirstResponder()
     }
 }

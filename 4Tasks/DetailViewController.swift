@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDelegate {
     var taskStore: TaskStore!
     var task: Task!
     var originalPriority: Priority!  //the task's original priority
@@ -37,6 +37,16 @@ class DetailViewController: UIViewController {
         itemName = task.name
         if let de = task.detail {
             itemDetail = de}
+        
+        let toolbar = UIToolbar()
+        toolbar.bounds = CGRect(x: 0, y: 0, width: 320, height: 50)
+        toolbar.sizeToFit()
+        toolbar.barStyle = UIBarStyle.default
+        toolbar.items = [
+            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil), UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: nil, action: #selector(handleDone(sender:)))
+        ]
+        
+        self.Detail.inputAccessoryView = toolbar
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -125,5 +135,14 @@ class DetailViewController: UIViewController {
     func getWorkDone() {
         taskStore.removeTask(task)
         _ = navigationController?.popViewController(animated: true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func handleDone(sender: UIButton) {
+        self.Detail.resignFirstResponder()
     }
 }
