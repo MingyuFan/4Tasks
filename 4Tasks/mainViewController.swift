@@ -14,11 +14,16 @@
 //  4/15/2017 Settings in slider menu: control section header
 
 import UIKit
+import EventKit
 
 class mainViewController: UIViewController {
     var listViewController: ListViewController!
     var gridViewController: GridViewController!
     var taskStore: TaskStore!
+    
+    var eventStore: EKEventStore!
+    var reminders: [EKReminder]!
+    var calendars: [EKCalendar]!
     
     @IBOutlet var headerListSwitch: UISwitch!
     @IBOutlet var headerGridSwitch: UISwitch!
@@ -30,10 +35,10 @@ class mainViewController: UIViewController {
     
     var containerViewController: UITabBarController!
     var addNewTaskViewController: AddTaskViewController!
-    
+    //viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //slider menu
         let defaults = UserDefaults.standard
         
         if(defaults.object(forKey: "listSwitch") != nil) {
@@ -46,6 +51,20 @@ class mainViewController: UIViewController {
         
         menuView.layer.shadowOpacity = 1
         menuView.layer.shadowRadius = 6
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //Event Reminder
+        self.eventStore = EKEventStore()
+        self.reminders = [EKReminder]()
+        eventStore.requestAccess(to: EKEntityType.reminder, completion: {(granted, error) in
+            if !granted {
+                print("Access to store not granted")
+            }
+        })
+        
+        calendars = eventStore.calendars(for: EKEntityType.reminder)
     }
     let containerSegueName = "containerSegue"
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

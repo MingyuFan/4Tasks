@@ -86,7 +86,7 @@ class GridZero: UITableViewController {
         
         if(defaults.object(forKey: "gridSwitch") != nil) {
             if(defaults.bool(forKey: "gridSwitch")) {
-                return "Urgent and Important"
+                return "Ugt and Impt"
             } else {
                 return nil
             }
@@ -138,7 +138,7 @@ class GridOne: UITableViewController {
         
         if(defaults.object(forKey: "gridSwitch") != nil) {
             if(defaults.bool(forKey: "gridSwitch")) {
-                return "Not Urgent But Important"
+                return "Not Ugt But Impt"
             } else {
                 return nil
             }
@@ -190,7 +190,7 @@ class GridTwo: UITableViewController {
         
         if(defaults.object(forKey: "gridSwitch") != nil) {
             if(defaults.bool(forKey: "gridSwitch")) {
-                return "Urgent but Not Important"
+                return "Ugt Not Impt"
             } else {
                 return nil
             }
@@ -242,7 +242,7 @@ class GridThree: UITableViewController {
         
         if(defaults.object(forKey: "gridSwitch") != nil) {
             if(defaults.bool(forKey: "gridSwitch")) {
-                return "Not Urgent Not Important"
+                return "Not Ugt Not Impt"
             } else {
                 return nil
             }

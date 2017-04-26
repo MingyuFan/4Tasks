@@ -15,13 +15,21 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     var TaskName: String?
     var Detail: String?
     
-
+    @IBOutlet var reminderButton: UIButton!
+    
+    @IBOutlet var leftLeadingConstraints: NSLayoutConstraint!
+    
     @IBOutlet var DetailTextView: UITextView!
     //buttons
     @IBOutlet var UI: UIButton!
     @IBOutlet var NUI: UIButton!
     @IBOutlet var UNI: UIButton!
     @IBOutlet var NUNI: UIButton!
+    
+    //date Pick view vars
+    @IBOutlet var backToAddButton: UIButton!
+    @IBOutlet var deleteReminderButton: UIButton!
+    @IBOutlet var setReminderButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +41,13 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
             UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil), UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: nil, action: #selector(handleDone(sender:)))
         ]
         
+        reminderButton.setTitle("Set Reminder", for: .normal)
+        
         self.DetailTextView.inputAccessoryView = toolbar
-        //navigationItem.title = "New Task"
+        
+        backToAddButton.setTitle("Back", for: .normal)
+        deleteReminderButton.setTitle("Delete", for: .normal)
+        setReminderButton.setTitle("Set Reminder", for: .normal)
     }
     
     override func viewDidLayoutSubviews() {
@@ -105,5 +118,21 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     
     func handleDone(sender: UIButton) {
         self.DetailTextView.resignFirstResponder()
+    }
+    
+    @IBAction func setReminder(_ sender: UIButton) {
+        leftLeadingConstraints.constant = 0
+    }
+    
+    @IBAction func backToAddView(_ sender: UIButton) {
+        leftLeadingConstraints.constant = 360
+    }
+    @IBAction func deleteReminder(_ sender: UIButton) {
+        reminderButton.setTitle("Set Reminder", for: .normal)
+        leftLeadingConstraints.constant = 360
+    }
+    @IBAction func setReminderAndBacktoView(_ sender: UIButton) {
+        
+        leftLeadingConstraints.constant = 360
     }
 }
