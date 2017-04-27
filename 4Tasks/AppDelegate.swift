@@ -7,18 +7,21 @@
 //
 
 import UIKit
+import EventKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let taskStore = TaskStore()
-
+    let eventStore = EKEventStore()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         let navController = window!.rootViewController as! UINavigationController
         let MainViewController = navController.topViewController as! mainViewController
-        MainViewController.taskStore = taskStore;
+        MainViewController.taskStore = taskStore
+        MainViewController.eventStore = eventStore
         //taskStore.createTask()
         //taskStore.createTask(taskname: "wtrf", taskPriority: Priority.UI)
         // Override point for customization after application launch.

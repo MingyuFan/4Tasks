@@ -7,19 +7,29 @@
 //
 
 import UIKit
+import EventKit
 
 class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDelegate {
     var taskStore: TaskStore!
+    var eventStore: EKEventStore!
     var task: Task!
     var originalPriority: Priority!  //the task's original priority
     var priority: Priority!   //may be changed by user
     var itemName: String!
     var itemDetail: String?
+    var reminder: EKReminder?
+    @IBOutlet weak var reminderViewConstraints: NSLayoutConstraint!
+    
+    @IBOutlet weak var reminderBackButton: UIButton!
+    @IBOutlet weak var reminderDeleteButton: UIButton!
+    @IBOutlet weak var mySetReminderButton: UIButton!
+    @IBOutlet weak var myDatePicker: UIDatePicker!
 
     @IBOutlet var TaskName: UITextField!
     @IBOutlet var Detail: UITextView!
     @IBOutlet var PriorityButton: UIButton!
     @IBOutlet var DateButton: UIButton!
+    @IBOutlet weak var reminderButton: UIButton!
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -47,6 +57,16 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
         ]
         
         self.Detail.inputAccessoryView = toolbar
+        
+        if let iden = task.reminderIdentifier {
+            print("Hello!")
+            print(iden)
+            reminder = eventStore.calendarItem(withIdentifier: iden) as? EKReminder
+            let text = DateFormatter.localizedString(from: (reminder?.alarms?[0].absoluteDate)!, dateStyle: .medium, timeStyle: .short)
+            reminderButton.setTitle("Remind me AT: \(text)", for: .normal)
+        } else {
+            reminderButton.setTitle("No Reminder, Click to Add One", for: .normal)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,7 +82,9 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
         case Priority.NUNI: PriorityButton.setTitle("Priority: Not Urgent Not Important", for: .normal)
         case Priority.UNI: PriorityButton.setTitle("Priority: Urgent but Not Important", for: .normal)
         }
-        DateButton.setTitle("Date: \(dateFormatter.string(from: task.dateCreated))", for: .normal)
+        DateButton.setTitle("Created Date: \(dateFormatter.string(from: task.dateCreated))", for: .normal)
+        
+        reminderViewConstraints.constant = 360
     }
     
     @IBAction func changeName(_ sender: UITextField) {
@@ -110,6 +132,14 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
         if let lastDetail = Detail.text {
             task.detail = lastDetail
         }
+        if let re = reminder {
+            task.reminderIdentifier = re.calendarItemIdentifier
+            re.title = task.name
+            print("set title")
+        } else {
+            task.reminderIdentifier = nil
+        }
+
         if originalPriority != priority {
             taskStore.removeTask(task)
             task.priority = priority
@@ -144,5 +174,45 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
     
     func handleDone(sender: UIButton) {
         self.Detail.resignFirstResponder()
+    }
+    
+    @IBAction func showReminderView(_ sender: UIButton) {
+        reminderViewConstraints.constant = 0
+    }
+    
+    @IBAction func leaveReminderView(_ sender: UIButton) {
+        reminderViewConstraints.constant = 360
+    }
+    @IBAction func deleteReminderAndLeave(_ sender: UIButton) {
+        reminderButton.setTitle("Click To Set Reminder", for: .normal)
+        do {
+            try eventStore.remove(reminder!, commit: true)
+        } catch {
+            print("Failed to remove reminder")
+        }
+        reminder = nil
+        reminderViewConstraints.constant = 360
+    }
+    @IBAction func setOrResetReminder(_ sender: UIButton) {
+        if reminder == nil {
+            reminder = EKReminder(eventStore: eventStore)
+        }
+        reminder?.calendar = eventStore.defaultCalendarForNewReminders()
+        let date = myDatePicker.date
+        let alarm = EKAlarm(absoluteDate: date)
+        if (reminder?.hasAlarms)! {
+            reminder?.removeAlarm((reminder?.alarms?[0])!)
+        }
+        reminder?.addAlarm(alarm)
+        do {
+            try eventStore.save(reminder!,commit: true)
+        } catch let error {
+            print("Reminder failed with error \(error.localizedDescription)")
+        }
+        let text = DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .short)
+        reminderButton.setTitle("Remind me at: \(text)", for: .normal)
+        print("Reminder set")
+        
+        reminderViewConstraints.constant = 360
     }
 }

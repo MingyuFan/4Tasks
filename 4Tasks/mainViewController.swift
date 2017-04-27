@@ -12,6 +12,7 @@
 //  4/8/2017  Cells done
 //  4/13/2017 Set style for Priority; Slider menu
 //  4/15/2017 Settings in slider menu: control section header
+//  4/20/2017 Add reminder
 
 import UIKit
 import EventKit
@@ -56,7 +57,7 @@ class mainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         //Event Reminder
-        self.eventStore = EKEventStore()
+        
         self.reminders = [EKReminder]()
         eventStore.requestAccess(to: EKEntityType.reminder, completion: {(granted, error) in
             if !granted {
@@ -74,11 +75,14 @@ class mainViewController: UIViewController {
             listViewController = containerViewController!.viewControllers?[0] as! ListViewController
             gridViewController = containerViewController!.viewControllers?[1] as! GridViewController
             listViewController.taskStore = taskStore
+            listViewController.eventStore = eventStore
             gridViewController.taskStore = taskStore
+            gridViewController.eventStore = eventStore
         }
         if segue.identifier == "SegueForAddTask" {
             addNewTaskViewController = segue.destination as! AddTaskViewController
             addNewTaskViewController.taskStore = taskStore
+            addNewTaskViewController.eventStore = eventStore
         }
     }
     

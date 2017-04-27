@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EventKit
 
 enum Priority: Int {
     case UI = 0 //important and urgent
@@ -19,11 +20,15 @@ class Task: NSObject, NSCoding {
     var detail: String?
     var priority: Priority!
     let dateCreated: Date
+    var reminderIdentifier: String?
+    //var reminder: EKReminder?
+    //var reminderIndex: Int!
     
     init(name: String, priority: Priority) {
         self.name = name
         self.priority = priority
         self.dateCreated = Date()
+        //reminderIndex = -1
         
         super.init()
     }
@@ -31,12 +36,13 @@ class Task: NSObject, NSCoding {
     init(name: String) {
         self.name = name
         self.dateCreated = Date()
+        //reminderIndex = -1
         super.init()
     }
     
     convenience init(random: Bool) {
         if random {
-            let name = "wtf"
+            let name = "try"
             let priority = Priority.NUI
             self.init(name: name,priority: priority)
         }
@@ -49,7 +55,10 @@ class Task: NSObject, NSCoding {
         aCoder.encode(name, forKey: "name")
         aCoder.encode(detail, forKey: "detail")
         aCoder.encode(dateCreated, forKey: "dateCreated")
+        //aCoder.encode(reminderIndex, forKey: "reminderIndex")
         aCoder.encode(priority?.rawValue, forKey: "priority")
+        //aCoder.encode(reminder, forKey: "reminder")
+        aCoder.encode(reminderIdentifier, forKey: "reminderIdentifier")
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -57,7 +66,9 @@ class Task: NSObject, NSCoding {
         priority = Priority(rawValue: aDecoder.decodeObject(forKey: "priority") as! Int)
         detail = aDecoder.decodeObject(forKey: "detail") as! String?
         dateCreated = aDecoder.decodeObject(forKey: "dateCreated") as! Date
-        
+        //reminderIndex = aDecoder.decodeInteger(forKey: "reminderIndex")
+        //reminder = aDecoder.decodeObject(forKey: "reminder") as! EKReminder?
+        reminderIdentifier = aDecoder.decodeObject(forKey: "reminderIdentifier") as! String?
         super.init()
     }
 }
