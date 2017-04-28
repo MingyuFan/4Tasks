@@ -40,18 +40,7 @@ class mainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //slider menu
-        let defaults = UserDefaults.standard
         
-        if(defaults.object(forKey: "listSwitch") != nil) {
-            headerListSwitch.isOn = defaults.bool(forKey: "listSwitch")
-        }
-        
-        if(defaults.object(forKey: "gridSwitch") != nil) {
-            headerListSwitch.isOn = defaults.bool(forKey: "gridSwitch")
-        }
-        
-        menuView.layer.shadowOpacity = 1
-        menuView.layer.shadowRadius = 6
         
     }
     
@@ -66,6 +55,25 @@ class mainViewController: UIViewController {
         })
         
         calendars = eventStore.calendars(for: EKEntityType.reminder)
+        //switch setting
+        let defaults = UserDefaults.standard
+        
+        if(defaults.object(forKey: "listSwitch") != nil) {
+            headerListSwitch.isOn = defaults.bool(forKey: "listSwitch")
+        } else {
+            headerListSwitch.isOn = true
+            defaults.set(true, forKey: "ListSwitch")
+        }
+        
+        if(defaults.object(forKey: "gridSwitch") != nil) {
+            headerGridSwitch.isOn = defaults.bool(forKey: "gridSwitch")
+        } else {
+            headerGridSwitch.isOn = true
+            defaults.set(true, forKey: "gridSwitch")
+        }
+        
+        menuView.layer.shadowOpacity = 1
+        menuView.layer.shadowRadius = 6
     }
     let containerSegueName = "containerSegue"
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

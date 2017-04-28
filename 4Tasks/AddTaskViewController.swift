@@ -20,12 +20,14 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     var TaskName: String?
     var Detail: String?
     
-    @IBOutlet var reminderButton: UIButton!
-    @IBOutlet weak var myDatePicker: UIDatePicker!
-    
-    @IBOutlet var leftLeadingConstraints: NSLayoutConstraint!
-    
     @IBOutlet var DetailTextView: UITextView!
+    
+    //Navigation stack buttons
+    @IBOutlet weak var goToPriorityButton: UIButton!
+    @IBOutlet var reminderButton: UIButton!
+    @IBOutlet weak var goToLocationButton: UIButton!
+    @IBOutlet weak var navigationEmptyView: UIView!
+
     //buttons
     @IBOutlet var UI: UIButton!
     @IBOutlet var NUI: UIButton!
@@ -36,6 +38,16 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     @IBOutlet var backToAddButton: UIButton!
     @IBOutlet var deleteReminderButton: UIButton!
     @IBOutlet var setReminderButton: UIButton!
+    @IBOutlet weak var myDatePicker: UIDatePicker!
+        
+    //Reminder View Constraints
+    @IBOutlet weak var reminderViewLeading: NSLayoutConstraint!
+    @IBOutlet weak var reminderViewTrailing: NSLayoutConstraint!
+    //Location View Constraints
+    @IBOutlet weak var locationViewLeading: NSLayoutConstraint!
+    @IBOutlet weak var locationViewTrailing: NSLayoutConstraint!
+    //Colors
+    var blueColor = UIColor(red: 0, green: 0.6, blue: 0.8, alpha: 1)
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -54,19 +66,42 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
             UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil), UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: nil, action: #selector(handleDone(sender:)))
         ]
         
-        reminderButton.setTitle("Set Reminder", for: .normal)
+        reminderButton.setTitle("Reminder", for: .normal)
+        goToPriorityButton.setTitle("Priority", for: .normal)
+        goToLocationButton.setTitle("Location", for: .normal)
         
         self.DetailTextView.inputAccessoryView = toolbar
         
-        backToAddButton.setTitle("Back", for: .normal)
         deleteReminderButton.setTitle("Delete", for: .normal)
         setReminderButton.setTitle("Set Reminder", for: .normal)
+        
+        //set Navigation font and background color
+        goToPriorityButton.setTitleColor(UIColor.white, for: .normal)
+        goToLocationButton.setTitleColor(UIColor.white, for: .normal)
+        reminderButton.setTitleColor(UIColor.white, for: .normal)
+        //set navigation color
+        
+        goToPriorityButton.backgroundColor = blueColor
+        goToLocationButton.backgroundColor = blueColor
+        reminderButton.backgroundColor = blueColor
+        navigationEmptyView.backgroundColor = blueColor
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        reminderViewLeading.constant = 400
+        reminderViewTrailing.constant = -400
+        
+        locationViewLeading.constant = 400
+        locationViewTrailing.constant = -400
+    }
+    
     //create new task and save it, return to previous view
     @IBAction func SaveNewTask(_ sender: Any) {
         if let name = TaskName {
@@ -78,7 +113,8 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
                 }
                 if let re = reminder {
                     task.reminderIdentifier = re.calendarItemIdentifier
-                    re.title = task.name
+                    reminder?.title = task.name
+                    reminder?.notes = task.name
                     //task.reminder?.title = name
                     print("set title")
                 } else {
@@ -140,23 +176,31 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     func handleDone(sender: UIButton) {
         self.DetailTextView.resignFirstResponder()
     }
-    
+    //Navigation  Priority
+    @IBAction func goToPriorityClearOthers(_ sender: UIButton) {
+        backToPriority()
+    }
+    //Navigation Reminder
     @IBAction func setMyReminder(_ sender: UIButton) {
-        leftLeadingConstraints.constant = 0
+        goToReminderWithoutButton()
+    }
+    //Navigation Location
+    @IBAction func goToLocationSetting(_ sender: UIButton) {
+        goToLocationWithoutButton()
     }
     
-    @IBAction func backToAddView(_ sender: UIButton) {
-        leftLeadingConstraints.constant = 360
-    }
+
     @IBAction func deleteReminder(_ sender: UIButton) {
-        reminderButton.setTitle("Click To Set Reminder", for: .normal)
+        if(reminder != nil) {
         do {
             try eventStore.remove(reminder!, commit: true)
         } catch {
             print("Failed to remove reminder")
         }
         reminder = nil
-        leftLeadingConstraints.constant = 360
+        }
+        backToPriority()
+        //leftLeadingConstraints.constant = 360
     }
     @IBAction func setReminderAndBacktoView(_ sender: UIButton) {
         if reminder == nil {
@@ -174,9 +218,87 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         } catch let error {
             print("Reminder failed with error \(error.localizedDescription)")
         }
-        let text = DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .short)
-        reminderButton.setTitle("Remind me at: \(text)", for: .normal)
+        //!!!!!!!==============================
+        //let text = DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .short)
+       // reminderButton.setTitle("Remind me at: \(text)", for: .normal)
         print("Reminder set")
-        leftLeadingConstraints.constant = 360
+        
+        backToPriority()
+    }
+    
+    func backToPriority() {
+        
+        reminderViewLeading.constant = 400
+        reminderViewTrailing.constant = -400
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.layoutIfNeeded()
+        })
+        
+        locationViewLeading.constant = 400
+        locationViewTrailing.constant = -400
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.layoutIfNeeded()
+        })
+        
+        goToPriorityButton.setTitleColor(blueColor, for: .normal)
+        goToLocationButton.setTitleColor(UIColor.white, for: .normal)
+        reminderButton.setTitleColor(UIColor.white, for: .normal)
+        //set navigation color
+        
+        goToPriorityButton.backgroundColor = UIColor.white
+        goToLocationButton.backgroundColor = blueColor
+        reminderButton.backgroundColor = blueColor
+    }
+    
+    func goToReminderWithoutButton() {
+        
+        locationViewLeading.constant = 400
+        locationViewTrailing.constant = -400
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.layoutIfNeeded()
+        })
+        
+        reminderViewLeading.constant = 0
+        reminderViewTrailing.constant = 0
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.layoutIfNeeded()
+        })
+        
+        goToPriorityButton.setTitleColor(UIColor.white, for: .normal)
+        goToLocationButton.setTitleColor(UIColor.white, for: .normal)
+        reminderButton.setTitleColor(blueColor, for: .normal)
+        //set navigation color
+        
+        goToPriorityButton.backgroundColor = blueColor
+        goToLocationButton.backgroundColor = blueColor
+        reminderButton.backgroundColor = UIColor.white
+    }
+    
+    func goToLocationWithoutButton() {
+        reminderViewLeading.constant = 400
+        reminderViewTrailing.constant = -400
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.layoutIfNeeded()
+        })
+        locationViewLeading.constant = 0
+        locationViewTrailing.constant = 0
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.layoutIfNeeded()
+        })
+        
+        goToPriorityButton.setTitleColor(UIColor.white, for: .normal)
+        goToLocationButton.setTitleColor(blueColor, for: .normal)
+        reminderButton.setTitleColor(UIColor.white, for: .normal)
+        //set navigation color
+        
+        goToPriorityButton.backgroundColor = blueColor
+        goToLocationButton.backgroundColor = UIColor.white
+        reminderButton.backgroundColor = blueColor
     }
 }

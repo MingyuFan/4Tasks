@@ -18,7 +18,9 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
     var itemName: String!
     var itemDetail: String?
     var reminder: EKReminder?
-    @IBOutlet weak var reminderViewConstraints: NSLayoutConstraint!
+    //@IBOutlet weak var reminderViewConstraints: NSLayoutConstraint!
+    @IBOutlet weak var viewLeadingLeft: NSLayoutConstraint!
+    @IBOutlet weak var viewTrailingRight: NSLayoutConstraint!
     
     @IBOutlet weak var reminderBackButton: UIButton!
     @IBOutlet weak var reminderDeleteButton: UIButton!
@@ -61,9 +63,13 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
         if let iden = task.reminderIdentifier {
             print("Hello!")
             print(iden)
-            reminder = eventStore.calendarItem(withIdentifier: iden) as? EKReminder
-            let text = DateFormatter.localizedString(from: (reminder?.alarms?[0].absoluteDate)!, dateStyle: .medium, timeStyle: .short)
-            reminderButton.setTitle("Remind me AT: \(text)", for: .normal)
+            if let re = eventStore.calendarItem(withIdentifier: iden) as? EKReminder{
+                reminder = re
+                let text = DateFormatter.localizedString(from: (reminder?.alarms?[0].absoluteDate)!, dateStyle: .medium, timeStyle: .short)
+                reminderButton.setTitle("Remind me AT: \(text)", for: .normal)
+            }
+            //reminder = eventStore.calendarItem(withIdentifier: iden) as? EKReminder
+            
         } else {
             reminderButton.setTitle("No Reminder, Click to Add One", for: .normal)
         }
@@ -84,7 +90,9 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
         }
         DateButton.setTitle("Created Date: \(dateFormatter.string(from: task.dateCreated))", for: .normal)
         
-        reminderViewConstraints.constant = 360
+        //reminderViewConstraints.constant = 360
+        viewLeadingLeft.constant = 400
+        viewTrailingRight.constant = -400
     }
     
     @IBAction func changeName(_ sender: UITextField) {
@@ -135,6 +143,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
         if let re = reminder {
             task.reminderIdentifier = re.calendarItemIdentifier
             re.title = task.name
+            re.notes = task.name
             print("set title")
         } else {
             task.reminderIdentifier = nil
@@ -177,11 +186,15 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
     }
     
     @IBAction func showReminderView(_ sender: UIButton) {
-        reminderViewConstraints.constant = 0
+        viewLeadingLeft.constant = 0
+        viewTrailingRight.constant = 0
+        //reminderViewConstraints.constant = 0
     }
     
     @IBAction func leaveReminderView(_ sender: UIButton) {
-        reminderViewConstraints.constant = 360
+        viewLeadingLeft.constant = 400
+        viewTrailingRight.constant = -400
+        //reminderViewConstraints.constant = 360
     }
     @IBAction func deleteReminderAndLeave(_ sender: UIButton) {
         reminderButton.setTitle("Click To Set Reminder", for: .normal)
@@ -191,7 +204,9 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
             print("Failed to remove reminder")
         }
         reminder = nil
-        reminderViewConstraints.constant = 360
+        viewLeadingLeft.constant = 400
+        viewTrailingRight.constant = -400
+        //reminderViewConstraints.constant = 360
     }
     @IBAction func setOrResetReminder(_ sender: UIButton) {
         if reminder == nil {
@@ -213,6 +228,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
         reminderButton.setTitle("Remind me at: \(text)", for: .normal)
         print("Reminder set")
         
-        reminderViewConstraints.constant = 360
+        viewLeadingLeft.constant = 400
+        viewTrailingRight.constant = -400
+        //reminderViewConstraints.constant = 360
     }
 }
