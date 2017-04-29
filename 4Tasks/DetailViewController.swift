@@ -8,8 +8,9 @@
 
 import UIKit
 import EventKit
+import CoreLocation
 
-class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDelegate {
+class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDelegate, CLLocationManagerDelegate {
     var taskStore: TaskStore!
     var eventStore: EKEventStore!
     var task: Task!
@@ -18,20 +19,23 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
     var itemName: String!
     var itemDetail: String?
     var reminder: EKReminder?
+    var locationReminder: EKReminder?
+    var locationManager: CLLocationManager!
     //@IBOutlet weak var reminderViewConstraints: NSLayoutConstraint!
     @IBOutlet weak var viewLeadingLeft: NSLayoutConstraint!
     @IBOutlet weak var viewTrailingRight: NSLayoutConstraint!
-    
+    //Time reminder view
     @IBOutlet weak var reminderBackButton: UIButton!
     @IBOutlet weak var reminderDeleteButton: UIButton!
     @IBOutlet weak var mySetReminderButton: UIButton!
     @IBOutlet weak var myDatePicker: UIDatePicker!
-
+    //stack main
     @IBOutlet var TaskName: UITextField!
     @IBOutlet var Detail: UITextView!
     @IBOutlet var PriorityButton: UIButton!
     @IBOutlet var DateButton: UIButton!
     @IBOutlet weak var reminderButton: UIButton!
+    @IBOutlet weak var locationReminderButton: UIButton!
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -66,12 +70,12 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
             if let re = eventStore.calendarItem(withIdentifier: iden) as? EKReminder{
                 reminder = re
                 let text = DateFormatter.localizedString(from: (reminder?.alarms?[0].absoluteDate)!, dateStyle: .medium, timeStyle: .short)
-                reminderButton.setTitle("Remind me AT: \(text)", for: .normal)
+                reminderButton.setTitle("Remind me at time: \(text)", for: .normal)
             }
             //reminder = eventStore.calendarItem(withIdentifier: iden) as? EKReminder
             
         } else {
-            reminderButton.setTitle("No Reminder, Click to Add One", for: .normal)
+            reminderButton.setTitle("No Time Reminder, Click to Add One", for: .normal)
         }
     }
     
@@ -93,6 +97,12 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
         //reminderViewConstraints.constant = 360
         viewLeadingLeft.constant = 400
         viewTrailingRight.constant = -400
+        
+        if task.locationReminderIdentifier != nil {
+            locationReminderButton.setTitle("Location reminder setted", for: .normal)
+        } else {
+            locationReminderButton.setTitle("No location reminder", for: .normal)
+        }
     }
     
     @IBAction func changeName(_ sender: UITextField) {
@@ -148,6 +158,9 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
         } else {
             task.reminderIdentifier = nil
         }
+        if let locaRe = locationReminder {
+            task.locationReminderIdentifier = locaRe.calendarItemIdentifier
+        }
 
         if originalPriority != priority {
             taskStore.removeTask(task)
@@ -186,8 +199,16 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
     }
     
     @IBAction func showReminderView(_ sender: UIButton) {
+        
+        if let re = reminder {
+            myDatePicker.date = (re.alarms?[0].absoluteDate!)!
+            mySetReminderButton.setTitle("Reset", for: .normal)
+        } else {
+            mySetReminderButton.setTitle("Set", for: .normal)
+        }
         viewLeadingLeft.constant = 0
         viewTrailingRight.constant = 0
+
         //reminderViewConstraints.constant = 0
     }
     
@@ -197,7 +218,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
         //reminderViewConstraints.constant = 360
     }
     @IBAction func deleteReminderAndLeave(_ sender: UIButton) {
-        reminderButton.setTitle("Click To Set Reminder", for: .normal)
+        reminderButton.setTitle("Click To Set Time Reminder", for: .normal)
         do {
             try eventStore.remove(reminder!, commit: true)
         } catch {
@@ -211,8 +232,9 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
     @IBAction func setOrResetReminder(_ sender: UIButton) {
         if reminder == nil {
             reminder = EKReminder(eventStore: eventStore)
+            reminder?.calendar = eventStore.defaultCalendarForNewReminders()
         }
-        reminder?.calendar = eventStore.defaultCalendarForNewReminders()
+        
         let date = myDatePicker.date
         let alarm = EKAlarm(absoluteDate: date)
         if (reminder?.hasAlarms)! {
@@ -225,11 +247,40 @@ class DetailViewController: UIViewController, UITextFieldDelegate,UITextViewDele
             print("Reminder failed with error \(error.localizedDescription)")
         }
         let text = DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .short)
-        reminderButton.setTitle("Remind me at: \(text)", for: .normal)
+        reminderButton.setTitle("Remind me at time: \(text)", for: .normal)
         print("Reminder set")
         
         viewLeadingLeft.constant = 400
         viewTrailingRight.constant = -400
         //reminderViewConstraints.constant = 360
+    }
+    //location reminder
+    @IBAction func addLocationReminder(_ sender: UIButton) {
+        locationManager.startUpdatingLocation()
+        remindLeavingCurrentLocation()
+        locationReminderButton.setTitle("Remind me when leaving current location", for: .normal)
+    }
+    //create location reminder
+    func remindLeavingCurrentLocation() {
+        locationReminder = EKReminder(eventStore: eventStore)
+        locationReminder?.calendar = eventStore.defaultCalendarForNewReminders()
+        locationReminder?.title = task.name
+        locationReminder?.notes = "You are leaving current location"
+        print("location Protocal works?")
+        let location = EKStructuredLocation(title: "Current Location")
+        location.geoLocation = locationManager.location
+        let alarm = EKAlarm()
+        
+        alarm.structuredLocation = location
+        alarm.proximity = EKAlarmProximity.leave
+        
+        locationReminder?.addAlarm(alarm)
+        
+        do {
+            try eventStore.save(locationReminder!,commit: true)
+            print("Location Reminder saved!!!!")
+        } catch let error {
+            print("Location reminder failed with error \(error.localizedDescription)")
+        }
     }
 }

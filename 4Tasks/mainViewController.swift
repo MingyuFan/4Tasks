@@ -16,15 +16,15 @@
 
 import UIKit
 import EventKit
+import CoreLocation
 
-class mainViewController: UIViewController {
+class mainViewController: UIViewController, CLLocationManagerDelegate {
     var listViewController: ListViewController!
     var gridViewController: GridViewController!
     var taskStore: TaskStore!
+    var locationManager: CLLocationManager!
     
     var eventStore: EKEventStore!
-    var reminders: [EKReminder]!
-    var calendars: [EKCalendar]!
     
     @IBOutlet var headerListSwitch: UISwitch!
     @IBOutlet var headerGridSwitch: UISwitch!
@@ -45,16 +45,16 @@ class mainViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //Event Reminder
-        
-        self.reminders = [EKReminder]()
         eventStore.requestAccess(to: EKEntityType.reminder, completion: {(granted, error) in
             if !granted {
                 print("Access to store not granted")
             }
         })
-        
-        calendars = eventStore.calendars(for: EKEntityType.reminder)
+        //configure location
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = (self as CLLocationManagerDelegate)
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         //switch setting
         let defaults = UserDefaults.standard
         
@@ -84,13 +84,16 @@ class mainViewController: UIViewController {
             gridViewController = containerViewController!.viewControllers?[1] as! GridViewController
             listViewController.taskStore = taskStore
             listViewController.eventStore = eventStore
+            listViewController.locationManager = locationManager
             gridViewController.taskStore = taskStore
             gridViewController.eventStore = eventStore
+            gridViewController.locationManager = locationManager
         }
         if segue.identifier == "SegueForAddTask" {
             addNewTaskViewController = segue.destination as! AddTaskViewController
             addNewTaskViewController.taskStore = taskStore
             addNewTaskViewController.eventStore = eventStore
+            addNewTaskViewController.locationManager = locationManager
         }
     }
     

@@ -8,6 +8,7 @@
 
 import UIKit
 import EventKit
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let taskStore = TaskStore()
     let eventStore = EKEventStore()
+    var locationManager: CLLocationManager = CLLocationManager()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -22,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let MainViewController = navController.topViewController as! mainViewController
         MainViewController.taskStore = taskStore
         MainViewController.eventStore = eventStore
+        MainViewController.locationManager = locationManager
         //taskStore.createTask()
         //taskStore.createTask(taskname: "wtrf", taskPriority: Priority.UI)
         // Override point for customization after application launch.

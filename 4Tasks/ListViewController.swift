@@ -9,10 +9,12 @@
 //03/27/2017 add MapKit to test UITabBar
 import UIKit
 import EventKit
+import CoreLocation
 
-class ListViewController: UITableViewController {
+class ListViewController: UITableViewController, CLLocationManagerDelegate {
     var taskStore: TaskStore!
     var eventStore: EKEventStore!
+    var locationManager: CLLocationManager!
     //pass data to detail
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
@@ -20,6 +22,7 @@ class ListViewController: UITableViewController {
             let detailViewController = segue.destination as! DetailViewController
             detailViewController.taskStore = taskStore
             detailViewController.eventStore = eventStore
+            detailViewController.locationManager = locationManager
             if let section = tableView.indexPathForSelectedRow?.section {
                 if let row = tableView.indexPathForSelectedRow?.row {
                     detailViewController.task = taskStore.allTasks[section][row]

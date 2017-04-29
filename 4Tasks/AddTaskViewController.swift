@@ -8,12 +8,16 @@
 
 import UIKit
 import EventKit
+import CoreLocation
 
-class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
+class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, CLLocationManagerDelegate {
+    
     var taskStore: TaskStore!
     var task: Task!
     var eventStore: EKEventStore!
     var reminder: EKReminder?
+    var locationReminder: EKReminder?//when leave current place
+    var locationManager: CLLocationManager!
     @IBOutlet var Save: UIBarButtonItem!
     
     var priority: Priority?
@@ -35,10 +39,12 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     @IBOutlet var NUNI: UIButton!
     
     //date Pick view vars
-    @IBOutlet var backToAddButton: UIButton!
     @IBOutlet var deleteReminderButton: UIButton!
     @IBOutlet var setReminderButton: UIButton!
     @IBOutlet weak var myDatePicker: UIDatePicker!
+    
+    //location view
+    @IBOutlet weak var locationLeavingSwitch: UISwitch!
         
     //Reminder View Constraints
     @IBOutlet weak var reminderViewLeading: NSLayoutConstraint!
@@ -58,6 +64,8 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //update location information
+        locationManager.startUpdatingLocation()
         let toolbar = UIToolbar()
         toolbar.bounds = CGRect(x: 0, y: 0, width: 320, height: 50)
         toolbar.sizeToFit()
@@ -66,14 +74,14 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
             UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil), UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: nil, action: #selector(handleDone(sender:)))
         ]
         
-        reminderButton.setTitle("Reminder", for: .normal)
+        reminderButton.setTitle("Time", for: .normal)
         goToPriorityButton.setTitle("Priority", for: .normal)
         goToLocationButton.setTitle("Location", for: .normal)
         
         self.DetailTextView.inputAccessoryView = toolbar
         
         deleteReminderButton.setTitle("Delete", for: .normal)
-        setReminderButton.setTitle("Set Reminder", for: .normal)
+        setReminderButton.setTitle("Set", for: .normal)
         
         //set Navigation font and background color
         goToPriorityButton.setTitleColor(UIColor.white, for: .normal)
@@ -85,6 +93,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         goToLocationButton.backgroundColor = blueColor
         reminderButton.backgroundColor = blueColor
         navigationEmptyView.backgroundColor = blueColor
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -100,6 +109,8 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         
         locationViewLeading.constant = 400
         locationViewTrailing.constant = -400
+        
+        locationLeavingSwitch.isOn = false
     }
     
     //create new task and save it, return to previous view
@@ -111,14 +122,20 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
                     Detail = text
                     task.detail = Detail
                 }
-                if let re = reminder {
-                    task.reminderIdentifier = re.calendarItemIdentifier
-                    reminder?.title = task.name
-                    reminder?.notes = task.name
+                if (reminder != nil) {
+                    reminder?.title = name
+                    reminder?.notes = "Task: \(name) needs to be done!"
+                    task.reminderIdentifier = reminder?.calendarItemIdentifier
                     //task.reminder?.title = name
                     print("set title")
                 } else {
                     task.reminderIdentifier = nil
+                }
+                if locationLeavingSwitch.isOn {
+                    remindLeavingCurrentLocation()
+                    locationReminder?.title = task.name
+                    locationReminder?.notes = "You are leaving current location"
+                    task.locationReminderIdentifier = locationReminder?.calendarItemIdentifier
                 }
                 _ = navigationController?.popViewController(animated: true)
             } else {
@@ -128,6 +145,13 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
                 ac.addAction(cancelAction)
                 present(ac, animated: true, completion: nil)
             }
+        } else {
+            let message = "Please name the Task"
+            let ac = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            ac.addAction(cancelAction)
+            present(ac, animated: true, completion: nil)
+
         }
     }
     
@@ -182,6 +206,9 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     }
     //Navigation Reminder
     @IBAction func setMyReminder(_ sender: UIButton) {
+        if let re = reminder {
+            myDatePicker.date = (re.alarms?[0].absoluteDate!)!
+        }
         goToReminderWithoutButton()
     }
     //Navigation Location
@@ -200,13 +227,14 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         reminder = nil
         }
         backToPriority()
+        setReminderButton.setTitle("Set", for: .normal)
         //leftLeadingConstraints.constant = 360
     }
     @IBAction func setReminderAndBacktoView(_ sender: UIButton) {
         if reminder == nil {
             reminder = EKReminder(eventStore: eventStore)
-        }
-        reminder?.calendar = eventStore.defaultCalendarForNewReminders()
+            reminder?.calendar = eventStore.defaultCalendarForNewReminders()
+        }        
         let date = myDatePicker.date
         let alarm = EKAlarm(absoluteDate: date)
         if (reminder?.hasAlarms)! {
@@ -223,7 +251,8 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
        // reminderButton.setTitle("Remind me at: \(text)", for: .normal)
         print("Reminder set")
         
-        backToPriority()
+        //backToPriority()
+        setReminderButton.setTitle("Reset", for: .normal)
     }
     
     func backToPriority() {
@@ -300,5 +329,33 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         goToPriorityButton.backgroundColor = blueColor
         goToLocationButton.backgroundColor = UIColor.white
         reminderButton.backgroundColor = blueColor
+    }
+    
+    //location protocal
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to get location: \(error.localizedDescription)")
+    }
+    //create location reminder
+    func remindLeavingCurrentLocation() {
+        locationReminder = EKReminder(eventStore: eventStore)
+        locationReminder?.calendar = eventStore.defaultCalendarForNewReminders()
+        print("location Protocal works?")
+        let location = EKStructuredLocation(title: "Current Location")
+        location.geoLocation = locationManager.location
+        let alarm = EKAlarm()
+        
+        alarm.structuredLocation = location
+        alarm.proximity = EKAlarmProximity.leave
+        
+        locationReminder?.addAlarm(alarm)
+        
+        do {
+            try eventStore.save(locationReminder!,commit: true)
+            print("Location Reminder saved!!!!")
+        } catch let error {
+            print("Location reminder failed with error \(error.localizedDescription)")
+        }
     }
 }

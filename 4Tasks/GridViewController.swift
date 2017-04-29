@@ -8,11 +8,12 @@
 
 import UIKit
 import EventKit
+import CoreLocation
 
-class GridViewController: UIViewController {
+class GridViewController: UIViewController, CLLocationManagerDelegate {
     var taskStore: TaskStore!
     var eventStore: EKEventStore!
-    
+    var locationManager: CLLocationManager!
     var gridZero: GridZero!
     var gridOne: GridOne!
     var gridTwo: GridTwo!
@@ -26,18 +27,22 @@ class GridViewController: UIViewController {
                 gridZero = segue.destination as! GridZero
                 gridZero.taskStore = taskStore
                 gridZero.eventStore = eventStore
+                gridZero.locationManager = locationManager
                 case "SegueOne":
                 gridOne = segue.destination as! GridOne
                 gridOne.taskStore = taskStore
                 gridOne.eventStore = eventStore
+                gridOne.locationManager = locationManager
                 case "SegueTwo":
                 gridTwo = segue.destination as! GridTwo
                 gridTwo.taskStore = taskStore
                 gridTwo.eventStore = eventStore
+                gridTwo.locationManager = locationManager
                 case "SegueThree":
                 gridThree = segue.destination as! GridThree
                 gridThree.taskStore = taskStore
                 gridThree.eventStore = eventStore
+                gridThree.locationManager = locationManager
             default:
                 break
             }
@@ -53,6 +58,7 @@ class GridViewController: UIViewController {
 class GridZero: UITableViewController {
     var taskStore: TaskStore!
     var eventStore: EKEventStore!
+    var locationManager: CLLocationManager!
     //return row in section  REQUIRED
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskStore.allTasks[0].count
@@ -64,6 +70,7 @@ class GridZero: UITableViewController {
             let detailViewController = segue.destination as! DetailViewController
             detailViewController.taskStore = taskStore
             detailViewController.eventStore = eventStore
+            detailViewController.locationManager = locationManager
                 if let row = tableView.indexPathForSelectedRow?.row {
                     detailViewController.task = taskStore.allTasks[0][row]
                 }
@@ -105,6 +112,7 @@ class GridZero: UITableViewController {
 class GridOne: UITableViewController {
     var taskStore: TaskStore!
     var eventStore: EKEventStore!
+    var locationManager: CLLocationManager!
     //return row in section  REQUIRED
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskStore.allTasks[1].count
@@ -124,6 +132,7 @@ class GridOne: UITableViewController {
             let detailViewController = segue.destination as! DetailViewController
             detailViewController.taskStore = taskStore
             detailViewController.eventStore = eventStore
+            detailViewController.locationManager = locationManager
             if let row = tableView.indexPathForSelectedRow?.row {
                 detailViewController.task = taskStore.allTasks[1][row]
             }
@@ -158,6 +167,7 @@ class GridOne: UITableViewController {
 class GridTwo: UITableViewController {
     var taskStore: TaskStore!
     var eventStore: EKEventStore!
+    var locationManager: CLLocationManager!
     //return row in section  REQUIRED
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskStore.allTasks[2].count
@@ -177,6 +187,7 @@ class GridTwo: UITableViewController {
             let detailViewController = segue.destination as! DetailViewController
             detailViewController.taskStore = taskStore
             detailViewController.eventStore = eventStore
+            detailViewController.locationManager = locationManager
             if let row = tableView.indexPathForSelectedRow?.row {
                 detailViewController.task = taskStore.allTasks[2][row]
             }
@@ -211,6 +222,7 @@ class GridTwo: UITableViewController {
 class GridThree: UITableViewController {
     var taskStore: TaskStore!
     var eventStore: EKEventStore!
+    var locationManager: CLLocationManager!
     //return row in section  REQUIRED
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskStore.allTasks[3].count
@@ -230,6 +242,7 @@ class GridThree: UITableViewController {
             let detailViewController = segue.destination as! DetailViewController
             detailViewController.taskStore = taskStore
             detailViewController.eventStore = eventStore
+            detailViewController.locationManager = locationManager
             if let row = tableView.indexPathForSelectedRow?.row {
                 detailViewController.task = taskStore.allTasks[3][row]
             }

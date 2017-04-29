@@ -21,6 +21,7 @@ class Task: NSObject, NSCoding {
     var priority: Priority!
     let dateCreated: Date
     var reminderIdentifier: String?
+    var locationReminderIdentifier: String?
     //var reminder: EKReminder?
     //var reminderIndex: Int!
     
@@ -59,6 +60,7 @@ class Task: NSObject, NSCoding {
         aCoder.encode(priority?.rawValue, forKey: "priority")
         //aCoder.encode(reminder, forKey: "reminder")
         aCoder.encode(reminderIdentifier, forKey: "reminderIdentifier")
+        aCoder.encode(locationReminderIdentifier, forKey: "locationReminderIdentifier")
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -69,6 +71,8 @@ class Task: NSObject, NSCoding {
         //reminderIndex = aDecoder.decodeInteger(forKey: "reminderIndex")
         //reminder = aDecoder.decodeObject(forKey: "reminder") as! EKReminder?
         reminderIdentifier = aDecoder.decodeObject(forKey: "reminderIdentifier") as! String?
+        locationReminderIdentifier = aDecoder.decodeObject(forKey: "locationReminderIdentifier") as! String?
+        
         super.init()
     }
 }
