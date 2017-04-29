@@ -268,23 +268,23 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="240"/>
                                                         <subviews>
                                                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="VtR-kv-sgj">
-                                                                <rect key="frame" x="0.0" y="0.0" width="343" height="210"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="343" height="200"/>
                                                                 <date key="date" timeIntervalSinceReferenceDate="514861425.05987799">
                                                                     <!--2017-04-26 01:03:45 +0000-->
                                                                 </date>
                                                             </datePicker>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PCa-DX-V1f" userLabel="BackDeleteSet">
-                                                                <rect key="frame" x="0.0" y="210" width="343" height="30"/>
+                                                                <rect key="frame" x="0.0" y="200" width="343" height="40"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHX-is-QH6" userLabel="Delete">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="171.5" height="30"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="171.5" height="40"/>
                                                                         <state key="normal" title="Button"/>
                                                                         <connections>
                                                                             <action selector="deleteReminder:" destination="iai-S4-rNk" eventType="touchUpInside" id="skz-IS-sfD"/>
                                                                         </connections>
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nXv-yx-AfZ" userLabel="Set Reminder">
-                                                                        <rect key="frame" x="171.5" y="0.0" width="171.5" height="30"/>
+                                                                        <rect key="frame" x="171.5" y="0.0" width="171.5" height="40"/>
                                                                         <state key="normal" title="Button"/>
                                                                         <connections>
                                                                             <action selector="setReminderAndBacktoView:" destination="iai-S4-rNk" eventType="touchUpInside" id="tZE-7H-QBH"/>
@@ -293,7 +293,7 @@
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="nXv-yx-AfZ" firstAttribute="width" secondItem="dHX-is-QH6" secondAttribute="width" id="6bX-BH-xxj"/>
-                                                                    <constraint firstAttribute="height" constant="30" id="hZV-k0-hof"/>
+                                                                    <constraint firstAttribute="height" constant="40" id="hZV-k0-hof"/>
                                                                 </constraints>
                                                             </stackView>
                                                         </subviews>
@@ -308,15 +308,32 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1mx-Li-gPY" userLabel="LocationSettingView">
-                                                <rect key="frame" x="360" y="0.0" width="343" height="240"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="343" height="240"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remind when leave current location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xrc-Z4-cKb">
+                                                        <rect key="frame" x="0.0" y="25.5" width="272.5" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q5m-DH-5rJ">
+                                                        <rect key="frame" x="294" y="20" width="51" height="31"/>
+                                                    </switch>
+                                                </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstItem="Xrc-Z4-cKb" firstAttribute="leading" secondItem="1mx-Li-gPY" secondAttribute="leading" id="8Px-pI-xei"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Q5m-DH-5rJ" secondAttribute="trailing" id="F5h-0E-dWa"/>
+                                                    <constraint firstItem="Xrc-Z4-cKb" firstAttribute="centerY" secondItem="Q5m-DH-5rJ" secondAttribute="centerY" id="ZUv-tW-B1S"/>
+                                                    <constraint firstItem="Q5m-DH-5rJ" firstAttribute="top" secondItem="1mx-Li-gPY" secondAttribute="top" constant="20" id="f6A-gE-hJA"/>
+                                                </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="1mx-Li-gPY" secondAttribute="bottom" id="0dF-qq-0Mp"/>
                                             <constraint firstAttribute="bottom" secondItem="um0-iv-w9E" secondAttribute="bottom" id="37T-C7-QQG"/>
-                                            <constraint firstItem="1mx-Li-gPY" firstAttribute="leading" secondItem="452-UL-nQ0" secondAttribute="leading" constant="360" id="DGW-Jt-AqI"/>
+                                            <constraint firstItem="1mx-Li-gPY" firstAttribute="leading" secondItem="452-UL-nQ0" secondAttribute="leading" id="DGW-Jt-AqI"/>
                                             <constraint firstAttribute="trailing" secondItem="um0-iv-w9E" secondAttribute="trailing" id="JdP-lm-MJP"/>
                                             <constraint firstItem="hex-YV-IYh" firstAttribute="top" secondItem="452-UL-nQ0" secondAttribute="top" id="K2t-yd-kwD"/>
                                             <constraint firstAttribute="bottom" secondItem="hex-YV-IYh" secondAttribute="bottom" id="VRq-ho-SDt"/>
@@ -324,7 +341,7 @@
                                             <constraint firstAttribute="trailing" secondItem="hex-YV-IYh" secondAttribute="trailing" id="c8C-xb-Rv9"/>
                                             <constraint firstItem="hex-YV-IYh" firstAttribute="leading" secondItem="452-UL-nQ0" secondAttribute="leading" id="oSo-y3-601"/>
                                             <constraint firstItem="um0-iv-w9E" firstAttribute="top" secondItem="452-UL-nQ0" secondAttribute="top" id="oln-U8-erU"/>
-                                            <constraint firstAttribute="trailing" secondItem="1mx-Li-gPY" secondAttribute="trailing" constant="-360" id="prD-da-n4T"/>
+                                            <constraint firstAttribute="trailing" secondItem="1mx-Li-gPY" secondAttribute="trailing" id="prD-da-n4T"/>
                                             <constraint firstAttribute="height" constant="240" id="qkD-kt-1E2"/>
                                             <constraint firstItem="um0-iv-w9E" firstAttribute="leading" secondItem="452-UL-nQ0" secondAttribute="leading" id="v96-R7-50M"/>
                                         </constraints>
@@ -359,6 +376,7 @@
                         <outlet property="deleteReminderButton" destination="dHX-is-QH6" id="UJ2-bb-DMW"/>
                         <outlet property="goToLocationButton" destination="cBy-Zc-7VW" id="LED-Vu-fby"/>
                         <outlet property="goToPriorityButton" destination="Xzl-KR-5H9" id="N3M-iP-zti"/>
+                        <outlet property="locationLeavingSwitch" destination="Q5m-DH-5rJ" id="a7v-Fj-gbh"/>
                         <outlet property="locationViewLeading" destination="DGW-Jt-AqI" id="xlg-OZ-IVY"/>
                         <outlet property="locationViewTrailing" destination="prD-da-n4T" id="Uwm-4G-Y3Q"/>
                         <outlet property="myDatePicker" destination="VtR-kv-sgj" id="ACC-mP-YHD"/>
@@ -427,13 +445,13 @@
                                         </constraints>
                                     </stackView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Type in detail here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mGN-of-VJ4">
-                                        <rect key="frame" x="0.0" y="40" width="268" height="340"/>
+                                        <rect key="frame" x="0.0" y="40" width="268" height="300"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T9W-Ob-OdD">
-                                        <rect key="frame" x="0.0" y="380" width="268" height="40"/>
+                                        <rect key="frame" x="0.0" y="340" width="268" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="dxs-jJ-cSc"/>
                                         </constraints>
@@ -443,20 +461,30 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUy-RQ-Jyc">
-                                        <rect key="frame" x="0.0" y="420" width="268" height="40"/>
+                                        <rect key="frame" x="0.0" y="380" width="268" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="8wS-Cu-7dr"/>
                                         </constraints>
                                         <state key="normal" title="Date"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hC6-cU-8eV">
-                                        <rect key="frame" x="0.0" y="460" width="268" height="40"/>
+                                        <rect key="frame" x="0.0" y="420" width="268" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="lzl-JK-ObE"/>
                                         </constraints>
                                         <state key="normal" title="Remainder"/>
                                         <connections>
                                             <action selector="showReminderView:" destination="eMs-QO-DR5" eventType="touchUpInside" id="Yk3-QL-tIN"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iuc-sf-hYm">
+                                        <rect key="frame" x="0.0" y="460" width="268" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="OH9-Ma-RO2"/>
+                                        </constraints>
+                                        <state key="normal" title="LocationReminder"/>
+                                        <connections>
+                                            <action selector="addLocationReminder:" destination="eMs-QO-DR5" eventType="touchUpInside" id="2lu-BD-aNw"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -535,6 +563,7 @@
                         <outlet property="Detail" destination="mGN-of-VJ4" id="dX5-Ph-iWs"/>
                         <outlet property="PriorityButton" destination="T9W-Ob-OdD" id="uxH-6j-HnI"/>
                         <outlet property="TaskName" destination="xVf-5E-YjP" id="jXi-Kv-R5j"/>
+                        <outlet property="locationReminderButton" destination="iuc-sf-hYm" id="Alp-Cz-ymU"/>
                         <outlet property="myDatePicker" destination="8m5-Ar-wGf" id="OYz-dF-RE7"/>
                         <outlet property="mySetReminderButton" destination="ugf-QE-5Aa" id="OIn-o4-eEw"/>
                         <outlet property="reminderBackButton" destination="j5N-BP-fRm" id="Qt6-uj-EgQ"/>
@@ -880,7 +909,7 @@
                                 <rect key="frame" x="0.0" y="28" width="150" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ots-Uj-cfP" id="nhR-k2-NO7">
-                                    <rect key="frame" x="0.0" y="0.0" width="150" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="150.5" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -888,7 +917,7 @@
                                 <rect key="frame" x="0.0" y="72" width="150" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pLc-VX-X2E" id="Dy9-GM-jZJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="150" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="150.5" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JYF-Wi-7Uh">
